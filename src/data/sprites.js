@@ -3,17 +3,17 @@
 // '.' and ' ' are transparent — the renderer skips them.
 // Keep sprites small (8×8, 9×9, 16×16) — we live in 160×144 space.
 
-// 9×9 pine tree. Palette: '0'=dark trunk/outline, '1'=canopy body
+// 8×8 round tree (drawn at 2× = 16×16, fills one tile).
+// Palette: '0'=outline/trunk, '1'=canopy body
 export const TREE = [
-  '...000...',
-  '..01110..',
-  '.0111110.',
-  '011111111',
-  '.0111110.',
-  '..01110..',
-  '...010...',
-  '...010...',
-  '..00000..',
+  '.011110.',
+  '01111110',
+  '01111110',
+  '01111110',
+  '01111110',
+  '.011110.',
+  '..0110..',
+  '..0000..',
 ];
 
 // 6×8 player sprite (facing down, default)

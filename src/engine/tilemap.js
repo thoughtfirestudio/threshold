@@ -1,7 +1,7 @@
 // Tilemap: 10×9 grid, 16px tiles = 160×144 (exact GBC resolution)
 // Tile values: 0=ground (walkable), 1=wall (blocked), 2=path (walkable, lighter)
 
-import { dither, sprite, px } from './renderer.js';
+import { px, sprite } from './renderer.js';
 import { TREE } from '../data/sprites.js';
 
 export const TILE = 16;
@@ -19,16 +19,12 @@ export function getTile(tx, ty, tiles) {
   return tiles[ty][tx];
 }
 
-function treeOffset(col, row) {
-  const h = (col * 31 + row * 17 + col * row * 7) % 8;
-  return { dx: h % 3, dy: h % 2 };
-}
-
 export function drawTiles(tiles, pal) {
-  const treePal = { '0': pal['0'], '1': pal['1'] };
+  // Tree palette: outline slightly lighter than bg so it reads, canopy = mid green
+  const treePal = { '0': pal['1'], '1': pal['2'] };
 
-  // Ground dither fills entire canvas
-  dither(0, 0, 160, 144, pal['2'], pal['1']);
+  // Ground base — flat solid fill (Pokemon-style clean grass)
+  px(0, 0, 160, 144, pal['2']);
 
   for (let row = 0; row < MAP_H; row++) {
     for (let col = 0; col < MAP_W; col++) {
@@ -37,15 +33,16 @@ export function drawTiles(tiles, pal) {
       const y = row * TILE;
 
       if (t === 1) {
-        dither(x, y, x + TILE, y + TILE, pal['0'], pal['1']);
-        // Tree sprites on interior (non-edge) wall tiles
+        // Tree/wall tile: dark solid base
+        px(x, y, TILE, TILE, pal['0']);
+        // Tree sprite at 2× (8×8 → 16×16) fills the whole tile
+        // Interior tiles only — edge tiles stay as solid dark border
         if (row > 0 && row < MAP_H - 1 && col > 0 && col < MAP_W - 1) {
-          const { dx, dy } = treeOffset(col, row);
-          // TREE 9×9 at 1× — fits inside 16px tile with 3–4px margin
-          sprite(TREE, x + dx + 3, y + dy + 3, treePal, 1, 1);
+          sprite(TREE, x, y, treePal, 1, 2);
         }
       } else if (t === 2) {
-        dither(x, y, x + TILE, y + TILE, pal['3'], pal['2']);
+        // Path tile — lighter flat color
+        px(x, y, TILE, TILE, pal['3']);
       }
     }
   }
