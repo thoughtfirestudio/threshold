@@ -171,7 +171,7 @@ function tryMove(dir, room) {
   const nx = player.tileX + dx, ny = player.tileY + dy;
   player.facing = dir;
   // All hyperspace rooms are fully walkable, but clamp to grid bounds
-  if (nx >= 0 && ny >= 0 && nx < 8 && ny < 7) {
+  if (nx >= 0 && ny >= 0 && nx < 10 && ny < 9) {
     player.tileX = nx; player.tileY = ny;
     player.moving = true; player.moveTimer = 0;
   }

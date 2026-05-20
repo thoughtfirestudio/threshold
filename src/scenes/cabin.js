@@ -24,7 +24,7 @@ const BOWL_PAL   = { '0': A['0'], '1': A['1'], '3': A['3'] };
 const MOVE_TIME = 0.14;
 
 const player = {
-  tileX: 4, tileY: 7,
+  tileX: 5, tileY: 7,
   px: 0, py: 0,
   facing: 'down',
   moving: false,
@@ -228,62 +228,55 @@ function drawCabin() {
   // Floorboard lines at tile row boundaries
   const ctx = getCtx();
   ctx.fillStyle = A['0'];
-  for (let fy = 20; fy < 144; fy += 20) ctx.fillRect(0, fy, 160, 1);
+  // Floorboard lines at 16px tile boundaries
+  for (let fy = 16; fy < 144; fy += 16) ctx.fillRect(0, fy, 160, 1);
 
-  // Back wall (row 0 = 0–20px)
-  dither(0, 0, 160, 20, A['1'], A['0']);
+  // Back wall rows 0-1 (y=0–32)
+  dither(0, 0, 160, 32, A['1'], A['0']);
+  // Shelf rail at bottom of row 1
+  px(16, 29, 128, 3, A['0']);
 
-  // Window at tile (1,1): x=20–40, y=20–40
-  px(20, 20, 20, 20, A['0']);           // frame
-  px(22, 22, 7, 7, A['3']);            // pane TL
-  px(31, 22, 7, 7, A['3']);            // pane TR
-  px(22, 31, 7, 7, A['3']);            // pane BL
-  px(31, 31, 7, 7, A['3']);            // pane BR
+  // Window tile (1,1): x=16–32, y=16–32
+  px(16, 16, 16, 16, A['0']);
+  px(18, 18, 5, 5, A['3']); px(25, 18, 5, 5, A['3']);
+  px(18, 25, 5, 5, A['3']); px(25, 25, 5, 5, A['3']);
   ctx.fillStyle = A['2'];
-  ctx.fillRect(29, 22, 2, 16);         // vertical cross
-  ctx.fillRect(22, 29, 16, 2);         // horizontal cross
-  const wg = ctx.createRadialGradient(30, 30, 2, 30, 30, 24);
+  ctx.fillRect(23, 18, 2, 12); ctx.fillRect(18, 23, 12, 2);
+  const wg = ctx.createRadialGradient(24, 24, 1, 24, 24, 20);
   wg.addColorStop(0, 'rgba(216,184,115,0.45)');
   wg.addColorStop(1, 'rgba(216,184,115,0)');
-  ctx.fillStyle = wg; ctx.fillRect(14, 14, 32, 32);
+  ctx.fillStyle = wg; ctx.fillRect(8, 8, 32, 32);
 
-  // Journal at tile (2,1): x=40–60, y=20–40 — open book, ink trailing off
-  px(41, 22, 18, 14, A['1']);          // pages
-  px(41, 22, 1, 14, A['0']);           // left cover
-  px(58, 22, 1, 14, A['0']);           // right cover
-  px(49, 22, 2, 14, A['2']);           // spine
+  // Journal tile (3,1): x=48–64, y=16–32
+  px(49, 18, 13, 11, A['1']); px(49, 18, 1, 11, A['0']); px(61, 18, 1, 11, A['0']); px(55, 18, 1, 11, A['2']);
   ctx.fillStyle = A['0'];
-  for (let ly = 25; ly < 34; ly += 3) ctx.fillRect(43, ly, 5, 1); // ink lines left
-  for (let ly = 25; ly < 34; ly += 3) ctx.fillRect(51, ly, 5, 1); // ink lines right
+  for (let ly = 21; ly < 28; ly += 3) { ctx.fillRect(51, ly, 3, 1); ctx.fillRect(57, ly, 3, 1); }
 
-  // Books at tile (5,1): x=100–120, y=20–40
-  px(100, 34, 20, 2, A['0']);          // shelf board
-  const bookColors = [A['2'], A['3'], A['1'], A['2']];
-  bookColors.forEach((c, i) => { px(101 + i * 5, 20, 4, 14, c); });
+  // Books tile (6,1): x=96–112, y=16–32
+  [A['2'], A['3'], A['1'], A['2'], A['3']].forEach((c, i) => px(97 + i * 3, 17, 2, 12, c));
 
-  // Mirror at tile (6,1): x=120–140, y=20–40
-  px(120, 20, 20, 20, A['0']);         // frame
-  px(122, 22, 16, 16, A['1']);         // surface
+  // Mirror tile (8,1): x=128–144, y=16–32
+  px(128, 16, 16, 16, A['0']); px(130, 18, 12, 12, A['1']);
 
-  // Table: cols 2–4, rows 3–4 = x=40–100, y=60–100
-  px(40, 60, 60, 20, A['0']);          // tabletop (x=40 to x=100)
-  px(42, 62, 56, 12, A['1']);          // surface highlight
-  px(44, 80, 6, 20, A['0']);           // left leg
-  px(90, 80, 6, 20, A['0']);           // right leg
+  // Table: cols 3-6 (x=48–112), rows 3-4 (y=48–80) = 64×32px
+  // Front face (the visible part players see)
+  px(48, 48, 64, 32, A['0']);   // outer body
+  px(50, 50, 60, 22, A['1']);   // surface
+  // Front legs visible below table at y=80
+  px(54, 80, 5, 14, A['0']);   // left leg
+  px(101, 80, 5, 14, A['0']); // right leg
 
-  // Tea at tile (2,5): x=40–60, y=100–120
-  px(44, 106, 12, 8, A['1']);          // cup body
-  px(43, 106, 13, 2, A['0']);          // cup rim
-  px(43, 114, 14, 2, A['0']);          // saucer
+  // Tea tile (7,6): x=112–128, y=96–112
+  px(116, 100, 9, 7, A['1']); px(115, 100, 10, 2, A['0']); px(115, 107, 11, 2, A['0']);
 }
 
 function drawArtifact() {
   const glow = Math.sin(bowlGlowT * 1.8) * 0.1 + 0.8;
   const ctx = getCtx();
 
-  // Bowl centered on table: ARTIFACT_BOWL 6×4 at 2× = 12×8
-  // Table col 3 center = x=70; y=52 puts it sitting on the table surface
-  const bx = 64, by = 52;
+  // Bowl sits on the table surface. Table surface at y=50.
+  // ARTIFACT_BOWL 6×4 at 2× = 12×8. Center of table x=(48+112)/2=80, so bx=74.
+  const bx = 74, by = 48;
   sprite(ARTIFACT_BOWL, bx, by, BOWL_PAL, 1, 2);
 
   // Glowing core (center of 12×8 sprite)

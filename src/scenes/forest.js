@@ -43,7 +43,7 @@ const SHRINE_GLOW= { '0': F['1'], '1': F['2'], '3': F['3'] };
 // ── Player state ────────────────────────────────────────────────────────────
 
 const player = {
-  tileX: 3, tileY: 6,
+  tileX: 5, tileY: 7,
   // Visual pixel position (lerps toward tile * TILE + sprite centering offset)
   px: 0, py: 0,
   facing: 'down',
@@ -66,16 +66,16 @@ function snapPlayerToTile() {
 // ── Deer state ───────────────────────────────────────────────────────────────
 
 const deer = {
-  tileX: 5, tileY: 2,
+  tileX: 7, tileY: 2,
   px: 0, py: 0,
-  state: 'alert',   // 'alert' | 'calm' | 'bolted'
-  boltTargetX: 6, boltTargetY: 0,
+  state: 'alert',
+  boltTargetX: 8, boltTargetY: 1,
   nervousTimer: 0,
   boltProgress: 0,
 };
 
 function initDeer() {
-  deer.tileX = 5; deer.tileY = 2;
+  deer.tileX = 7; deer.tileY = 2;
   const { x, y } = tileToPixel(deer.tileX, deer.tileY, 16, 16);
   deer.px = x; deer.py = y;
   deer.state = flags.hasCrossed ? 'calm' : 'alert';
@@ -313,7 +313,7 @@ function updateDeer(dt) {
       deer.nervousTimer += dt;
       if (deer.nervousTimer > DEER_NERVE_THRESH) {
         deer.state = 'bolted';
-        deer.tileX = 6; deer.tileY = 0;
+        deer.tileX = 8; deer.tileY = 1;
         const { x, y } = tileToPixel(deer.tileX, deer.tileY, 16, 16);
         deer.px = x; deer.py = y;
       }
@@ -335,8 +335,8 @@ function drawProps() {
         drawDeer();
         break;
       case 'mushrooms_1': case 'mushrooms_2': case 'mushrooms_3': case 'mushrooms_4':
-        // MUSHROOM 8×8 at 2× = 16×16; centering in 20px tile: offset 2
-        sprite(MUSHROOM, px_ + 2, py_ + 2, MUSH_PAL, 1, 2);
+        // MUSHROOM 8×8 at 2× = 16×16; exact tile fit
+        sprite(MUSHROOM, px_, py_, MUSH_PAL, 1, 2);
         break;
       case 'log':
         drawLog(px_, py_);
@@ -358,22 +358,23 @@ function drawDeer() {
 }
 
 function drawLog(bx, by) {
-  // LOG 10×8 at 2× = 20×16; fits tile width exactly, y-center = (20-16)/2 = 2
-  sprite(LOG, bx, by + 2, LOG_PAL, 1, 2);
+  // LOG 10×8 at 2× = 20×16; spans 2 tiles wide (bx = left tile x)
+  // Draw centered in the 2-tile span: x = bx - 2, y centered in tile
+  sprite(LOG, bx - 2, by, LOG_PAL, 1, 2);
 }
 
 function drawStone(obj, bx, by) {
   const glow = flags.hasCrossed;
   const pal = glow ? STONE_GLOW : STONE_PAL;
-  // CARVED_STONE 7×8 at 2× = 14×16; x-center = (20-14)/2 = 3, y = 2
-  sprite(CARVED_STONE, bx + 3, by + 2, pal, 1, 2);
+  // CARVED_STONE 7×8 at 2× = 14×16; x-center in 16px tile = 1px each side
+  sprite(CARVED_STONE, bx + 1, by, pal, 1, 2);
   if (glow) {
     const ctx = getCtx();
-    const g = ctx.createRadialGradient(bx+10, by+10, 1, bx+10, by+10, 16);
+    const g = ctx.createRadialGradient(bx+8, by+8, 1, bx+8, by+8, 14);
     g.addColorStop(0, 'rgba(200,185,120,0.4)');
     g.addColorStop(1, 'rgba(200,185,120,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(bx, by, 20, 20);
+    ctx.fillRect(bx - 4, by - 4, 24, 24);
   }
 }
 
@@ -381,17 +382,17 @@ function drawShrine(bx, by) {
   const active = flags.shrineFilled;
   const near   = flags.hasCrossed && !active;
   const pal = (active || near) ? SHRINE_GLOW : SHRINE_PAL;
-  // SHRINE 10×10 at 2× = 20×20; fits tile exactly
-  sprite(active ? SHRINE_ACTIVE : SHRINE_EMPTY, bx, by, pal, 1, 2);
+  // SHRINE 10×10 at 2× = 20×20; spans into tile above — draw from by-4
+  sprite(active ? SHRINE_ACTIVE : SHRINE_EMPTY, bx - 2, by - 4, pal, 1, 2);
 
   if (active) {
     const ctx = getCtx();
     const glowAlpha = 0.5 + Math.sin(shrineGlowT * 3) * 0.15;
-    const g = ctx.createRadialGradient(bx+10, by+6, 1, bx+10, by+6, 28);
+    const g = ctx.createRadialGradient(bx+8, by+4, 1, bx+8, by+4, 22);
     g.addColorStop(0, `rgba(255,240,180,${glowAlpha})`);
     g.addColorStop(1, 'rgba(255,240,180,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(bx - 8, by - 8, 36, 36);
+    ctx.fillRect(bx - 10, by - 10, 36, 32);
   }
 }
 
