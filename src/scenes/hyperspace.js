@@ -169,7 +169,7 @@ function tryMove(dir, room) {
   const nx = player.tileX + dx, ny = player.tileY + dy;
   player.facing = dir;
   // All hyperspace rooms are fully walkable, but clamp to grid bounds
-  if (nx >= 0 && ny >= 0 && nx < 10 && ny < 9) {
+  if (nx >= 0 && ny >= 0 && nx < 8 && ny < 7) {
     player.tileX = nx; player.tileY = ny;
     player.moving = true; player.moveTimer = 0;
   }
@@ -231,10 +231,17 @@ function fireInteract(id) {
 
 // ── Drawing ───────────────────────────────────────────────────────────────────
 
+function getEntityCenter() {
+  const room = ROOMS[ENTITY_ROOMS[currentEntity]];
+  const obj = room.objects[0];
+  return { ecx: obj.x * TILE + TILE / 2, ecy: obj.y * TILE + TILE / 2 };
+}
+
 function drawBackground() {
   const ctx = getCtx();
+  const { ecx, ecy } = getEntityCenter();
 
-  // Animated tiling ground — shifts every frame
+  // Animated tiling ground
   const offset = Math.floor(animT * 20) % 8;
   for (let y = -offset; y < 144; y += 8) {
     for (let x = -offset; x < 160; x += 8) {
@@ -246,8 +253,7 @@ function drawBackground() {
   }
   ctx.globalAlpha = 1;
 
-  // Perspective lines converging to entity position (col 5, row 3 = px 80, 48)
-  const ecx = 80, ecy = 48;
+  // Perspective lines converging to entity center
   for (let a = 0; a < 16; a++) {
     const ang = a * Math.PI / 8;
     ctx.strokeStyle = a % 2 ? HS['2'] : HS['3'];
@@ -260,7 +266,7 @@ function drawBackground() {
   }
   ctx.globalAlpha = 1;
 
-  // Floating forest-symbols recontextualized (cross shapes in HS['4'])
+  // Floating cross symbols
   ctx.fillStyle = HS['4'];
   const symT = animT * 0.4;
   [[20,20],[140,16],[30,70],[134,64]].forEach(([sx,sy], i) => {
@@ -269,12 +275,10 @@ function drawBackground() {
     ctx.fillRect(sx-3, sy+3+oy, 8, 2);
   });
 
-  // Per-entity special background element
-  drawEntityBackground(ctx);
+  drawEntityBackground(ctx, ecx, ecy);
 }
 
-function drawEntityBackground(ctx) {
-  const ecx = 80, ecy = 46;
+function drawEntityBackground(ctx, ecx, ecy) {
 
   if (currentEntity === 'weaver') {
     // Pulsing diamond/geometric entity body
@@ -286,7 +290,8 @@ function drawEntityBackground(ctx) {
   } else if (currentEntity === 'twin') {
     // Twin: mirrors the player sprite but inverted colors
     const twinPal = { '0': HS['3'], '1': HS['2'] };
-    const { x, y } = tileToPixel(5, 3, 12, 16);
+    // Draw twin at entity center (ecx/ecy), offset so sprite is centered
+    const x = ecx - 6, y = ecy - 8;
     sprite(PLAYER_DOWN, x, y, twinPal, 1, 2);
     const mPal = { '0': HS['4'], '1': HS['1'] };
     sprite(PLAYER_DOWN, x, y, mPal, 0.4, 2);

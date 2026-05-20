@@ -24,6 +24,9 @@ export function initRenderer(canvas) {
   _ctx = canvas.getContext('2d');
   _ctx.imageSmoothingEnabled = false;
   _ctx.textBaseline = 'top';
+  // Scale 3× so all drawing code works in 160×144 logical space.
+  // Text rendered at e.g. "10px" becomes 30 device pixels → crisp, no antialias blur.
+  _ctx.scale(3, 3);
 }
 
 export function getCtx() { return _ctx; }

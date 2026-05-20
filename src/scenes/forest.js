@@ -43,7 +43,7 @@ const SHRINE_GLOW= { '0': F['1'], '1': F['2'], '3': F['3'] };
 // ── Player state ────────────────────────────────────────────────────────────
 
 const player = {
-  tileX: 5, tileY: 7,
+  tileX: 3, tileY: 6,
   // Visual pixel position (lerps toward tile * TILE + sprite centering offset)
   px: 0, py: 0,
   facing: 'down',
@@ -66,17 +66,17 @@ function snapPlayerToTile() {
 // ── Deer state ───────────────────────────────────────────────────────────────
 
 const deer = {
-  tileX: 7, tileY: 2,
+  tileX: 5, tileY: 2,
   px: 0, py: 0,
   state: 'alert',   // 'alert' | 'calm' | 'bolted'
-  boltTargetX: 8, boltTargetY: 1,
+  boltTargetX: 6, boltTargetY: 0,
   nervousTimer: 0,
-  boltProgress: 0,  // 0→1 for bolt animation
+  boltProgress: 0,
 };
 
 function initDeer() {
-  deer.tileX = 7; deer.tileY = 2;
-  const { x, y } = tileToPixel(deer.tileX, deer.tileY, 8, 8);
+  deer.tileX = 5; deer.tileY = 2;
+  const { x, y } = tileToPixel(deer.tileX, deer.tileY, 16, 16);
   deer.px = x; deer.py = y;
   deer.state = flags.hasCrossed ? 'calm' : 'alert';
   deer.nervousTimer = 0;
@@ -311,9 +311,8 @@ function updateDeer(dt) {
       deer.nervousTimer += dt;
       if (deer.nervousTimer > DEER_NERVE_THRESH) {
         deer.state = 'bolted';
-        // Snap deer to bolt position (corner)
-        deer.tileX = 8; deer.tileY = 1;
-        const { x, y } = tileToPixel(deer.tileX, deer.tileY, 8, 8);
+        deer.tileX = 6; deer.tileY = 0;
+        const { x, y } = tileToPixel(deer.tileX, deer.tileY, 16, 16);
         deer.px = x; deer.py = y;
       }
     } else {
@@ -334,7 +333,8 @@ function drawProps() {
         drawDeer();
         break;
       case 'mushrooms_1': case 'mushrooms_2': case 'mushrooms_3': case 'mushrooms_4':
-        sprite(MUSHROOM, px_ + 3, py_ + 4, MUSH_PAL);
+        // MUSHROOM 8×8 at 2× = 16×16; centering in 20px tile: offset 2
+        sprite(MUSHROOM, px_ + 2, py_ + 2, MUSH_PAL, 1, 2);
         break;
       case 'log':
         drawLog(px_, py_);
@@ -352,25 +352,26 @@ function drawProps() {
 function drawDeer() {
   const dSprite = (flags.hasCrossed || deer.state === 'calm') ? DEER_CALM : DEER_ALERT;
   const dPal    = (flags.hasCrossed || deer.state === 'calm') ? DEER_PAL_C : DEER_PAL_A;
-  sprite(dSprite, Math.round(deer.px), Math.round(deer.py), dPal);
+  sprite(dSprite, Math.round(deer.px), Math.round(deer.py), dPal, 1, 2);
 }
 
 function drawLog(bx, by) {
-  sprite(LOG, bx - 2, by + 4, LOG_PAL);
+  // LOG 10×8 at 2× = 20×16; fits tile width exactly, y-center = (20-16)/2 = 2
+  sprite(LOG, bx, by + 2, LOG_PAL, 1, 2);
 }
 
 function drawStone(obj, bx, by) {
   const glow = flags.hasCrossed;
   const pal = glow ? STONE_GLOW : STONE_PAL;
-  sprite(CARVED_STONE, bx + 5, by + 2, pal);
+  // CARVED_STONE 7×8 at 2× = 14×16; x-center = (20-14)/2 = 3, y = 2
+  sprite(CARVED_STONE, bx + 3, by + 2, pal, 1, 2);
   if (glow) {
-    // Small glow halo
     const ctx = getCtx();
-    const g = ctx.createRadialGradient(bx+8, by+6, 1, bx+8, by+6, 10);
+    const g = ctx.createRadialGradient(bx+10, by+10, 1, bx+10, by+10, 16);
     g.addColorStop(0, 'rgba(200,185,120,0.4)');
     g.addColorStop(1, 'rgba(200,185,120,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(bx, by, 16, 16);
+    ctx.fillRect(bx, by, 20, 20);
   }
 }
 
@@ -378,18 +379,17 @@ function drawShrine(bx, by) {
   const active = flags.shrineFilled;
   const near   = flags.hasCrossed && !active;
   const pal = (active || near) ? SHRINE_GLOW : SHRINE_PAL;
-  // Draw shrine offset to look centered
-  sprite(active ? SHRINE_ACTIVE : SHRINE_EMPTY, bx - 3, by - 6, pal);
+  // SHRINE 10×10 at 2× = 20×20; fits tile exactly
+  sprite(active ? SHRINE_ACTIVE : SHRINE_EMPTY, bx, by, pal, 1, 2);
 
   if (active) {
-    // Glow from filled bowl
     const ctx = getCtx();
     const glowAlpha = 0.5 + Math.sin(shrineGlowT * 3) * 0.15;
-    const g = ctx.createRadialGradient(bx+8, by+2, 1, bx+8, by+2, 20);
+    const g = ctx.createRadialGradient(bx+10, by+6, 1, bx+10, by+6, 28);
     g.addColorStop(0, `rgba(255,240,180,${glowAlpha})`);
     g.addColorStop(1, 'rgba(255,240,180,0)');
     ctx.fillStyle = g;
-    ctx.fillRect(bx - 12, by - 18, 40, 36);
+    ctx.fillRect(bx - 8, by - 8, 36, 36);
   }
 }
 

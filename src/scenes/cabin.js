@@ -221,63 +221,81 @@ function fireInteract(id) {
 // ── Drawing ───────────────────────────────────────────────────────────────────
 
 function drawCabin() {
-  // Floor
+  // Floor — warm dither
   dither(0, 0, 160, 144, A['1'], A['0']);
-  // Floorboard lines
+  // Floorboard lines at tile row boundaries
   const ctx = getCtx();
   ctx.fillStyle = A['0'];
-  for (let fy = 14; fy < 144; fy += 14) ctx.fillRect(0, fy, 160, 1);
+  for (let fy = 20; fy < 144; fy += 20) ctx.fillRect(0, fy, 160, 1);
 
-  // Back wall
+  // Back wall (row 0 = 0–20px)
   dither(0, 0, 160, 20, A['1'], A['0']);
 
-  // Window (top-left)
-  px(18, 5, 28, 16, A['0']);
-  px(20, 7, 24, 12, A['3']); // warm glow
+  // Window at tile (1,1): x=20–40, y=20–40
+  px(20, 20, 20, 20, A['0']);           // frame
+  px(22, 22, 7, 7, A['3']);            // pane TL
+  px(31, 22, 7, 7, A['3']);            // pane TR
+  px(22, 31, 7, 7, A['3']);            // pane BL
+  px(31, 31, 7, 7, A['3']);            // pane BR
   ctx.fillStyle = A['2'];
-  ctx.fillRect(31, 7, 1, 12); ctx.fillRect(20, 13, 24, 1);
-  // Window halo
-  const wg = ctx.createRadialGradient(32, 13, 2, 32, 13, 20);
-  wg.addColorStop(0, 'rgba(216,184,115,0.4)');
+  ctx.fillRect(29, 22, 2, 16);         // vertical cross
+  ctx.fillRect(22, 29, 16, 2);         // horizontal cross
+  const wg = ctx.createRadialGradient(30, 30, 2, 30, 30, 24);
+  wg.addColorStop(0, 'rgba(216,184,115,0.45)');
   wg.addColorStop(1, 'rgba(216,184,115,0)');
-  ctx.fillStyle = wg; ctx.fillRect(12, 0, 40, 32);
+  ctx.fillStyle = wg; ctx.fillRect(14, 14, 32, 32);
 
-  // Books on shelf (right wall)
-  px(100, 2, 52, 5, A['0']); // shelf board
-  const bookColors = [A['2'], A['3'], A['1'], A['2'], A['3'], A['1'], A['2']];
-  bookColors.forEach((c, i) => px(102 + i * 7, 0, 5, 5, c));
+  // Journal at tile (2,1): x=40–60, y=20–40 — open book, ink trailing off
+  px(41, 22, 18, 14, A['1']);          // pages
+  px(41, 22, 1, 14, A['0']);           // left cover
+  px(58, 22, 1, 14, A['0']);           // right cover
+  px(49, 22, 2, 14, A['2']);           // spine
+  ctx.fillStyle = A['0'];
+  for (let ly = 25; ly < 34; ly += 3) ctx.fillRect(43, ly, 5, 1); // ink lines left
+  for (let ly = 25; ly < 34; ly += 3) ctx.fillRect(51, ly, 5, 1); // ink lines right
 
-  // Table
-  px(56, 56, 48, 20, A['0']); // tabletop
-  px(58, 58, 44, 12, A['1']); // table surface
-  px(60, 76, 4, 14, A['0']); px(96, 76, 4, 14, A['0']); // legs
+  // Books at tile (5,1): x=100–120, y=20–40
+  px(100, 34, 20, 2, A['0']);          // shelf board
+  const bookColors = [A['2'], A['3'], A['1'], A['2']];
+  bookColors.forEach((c, i) => { px(101 + i * 5, 20, 4, 14, c); });
 
-  // After crossing: mirror shows "in sync" — just render the outline (no special effect)
-  // Mirror frame on right
-  px(110, 6, 16, 20, A['0']);
-  px(112, 8, 12, 16, A['1']);
+  // Mirror at tile (6,1): x=120–140, y=20–40
+  px(120, 20, 20, 20, A['0']);         // frame
+  px(122, 22, 16, 16, A['1']);         // surface
+
+  // Table: visually spans x=44–116, tiles (3,3) and (3,4) are wall
+  px(44, 58, 72, 22, A['0']);          // tabletop
+  px(46, 60, 68, 14, A['1']);          // surface
+  px(48, 82, 6, 20, A['0']);           // left leg
+  px(110, 82, 6, 20, A['0']);          // right leg
+
+  // Tea at tile (2,5): x=40–60, y=100–120
+  px(44, 106, 12, 8, A['1']);          // cup body
+  px(43, 106, 13, 2, A['0']);          // cup rim
+  px(43, 114, 14, 2, A['0']);          // saucer
 }
 
 function drawArtifact() {
   const glow = Math.sin(bowlGlowT * 1.8) * 0.1 + 0.8;
   const ctx = getCtx();
 
-  // Bowl at (4,3) tile = px 64, py 48 + center
-  const bx = 72, by = 46;
-  sprite(ARTIFACT_BOWL, bx, by, BOWL_PAL);
+  // Bowl centered on table: ARTIFACT_BOWL 6×4 at 2× = 12×8
+  // Table surface at y=60–74; bowl sits at y=50 (floating above)
+  const bx = 74, by = 50;
+  sprite(ARTIFACT_BOWL, bx, by, BOWL_PAL, 1, 2);
 
-  // Glowing core
+  // Glowing core (center of 12×8 sprite)
   ctx.fillStyle = '#fff';
   ctx.globalAlpha = glow;
-  ctx.fillRect(bx + 2, by + 1, 3, 2);
+  ctx.fillRect(bx + 4, by + 2, 4, 3);
   ctx.globalAlpha = 1;
 
   // Halo
-  const gg = ctx.createRadialGradient(bx+4, by+2, 1, bx+4, by+2, 18);
+  const gg = ctx.createRadialGradient(bx+6, by+4, 1, bx+6, by+4, 26);
   gg.addColorStop(0, `rgba(216,184,115,${glow * 0.6})`);
   gg.addColorStop(1, 'rgba(216,184,115,0)');
   ctx.fillStyle = gg;
-  ctx.fillRect(bx - 14, by - 14, 36, 30);
+  ctx.fillRect(bx - 20, by - 20, 52, 48);
 }
 
 function drawPlayer() {

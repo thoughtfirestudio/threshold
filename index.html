@@ -28,11 +28,10 @@
 
     #game {
       display: block;
-      /* Native: 160×144. Scaled up ×3 → 480×432. */
+      /* Canvas is 480×432 (3× native). Displayed at 480×432 so text
+         is rendered at full device resolution — crisp, no upscale blur. */
       width: 480px;
       height: 432px;
-      image-rendering: pixelated;
-      image-rendering: crisp-edges;
       cursor: none;
     }
 
@@ -45,7 +44,7 @@
 </head>
 <body>
   <div id="game-wrap">
-    <canvas id="game" width="160" height="144"></canvas>
+    <canvas id="game" width="480" height="432"></canvas>
   </div>
   <script type="module" src="src/main.js"></script>
 </body>
