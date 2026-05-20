@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>THE THRESHOLD — Visual Reference</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=VT323&family=Instrument+Serif:ital@0;1&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #1a1d18;
+    --paper: #e8e4d6;
+    --paper-2: #ddd8c6;
+    --accent: #c08b3e;
+    --rule: #b9b2a0;
+  }
+
+  html, body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'VT323', monospace;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  header { border-bottom: 3px double var(--ink); padding-bottom: 20px; margin-bottom: 8px; }
+  .kicker { font-size: 18px; letter-spacing: 4px; color: var(--accent); text-transform: uppercase; }
+  h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: 64px;
+    line-height: 0.95;
+    font-weight: 400;
+    letter-spacing: -1px;
+    margin: 4px 0;
+  }
+  .sub { font-size: 22px; color: #5a5648; letter-spacing: 1px; }
+
+  .legend {
+    display: flex; gap: 24px; flex-wrap: wrap;
+    font-size: 18px; color: #5a5648;
+    margin: 24px 0 48px; padding: 16px 20px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+  }
+  .legend b { color: var(--ink); }
+  .swatches { display: flex; gap: 6px; align-items: center; }
+  .sw { width: 22px; height: 22px; border: 1px solid rgba(0,0,0,0.2); }
+
+  .shot { margin-bottom: 64px; }
+  .shot-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 6px; }
+  .shot-num {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 40px; color: var(--accent); line-height: 1;
+  }
+  .shot-title { font-size: 30px; letter-spacing: 1px; }
+  .shot-note { font-size: 19px; color: #5a5648; max-width: 760px; margin-bottom: 18px; }
+  .shot-note em { color: var(--accent); font-style: normal; }
+
+  .screen-wrap {
+    display: inline-block;
+    padding: 14px;
+    background: #2b2b2b;
+    border-radius: 6px 6px 18px 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  }
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+    width: 480px; height: 432px;
+    background: #000;
+  }
+
+  .pair { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
+  .caption { font-size: 18px; color: #5a5648; max-width: 280px; padding-top: 8px; }
+  .caption b { color: var(--ink); display: block; font-size: 21px; margin-bottom: 4px; }
+
+  footer {
+    border-top: 3px double var(--ink); margin-top: 40px; padding-top: 20px;
+    font-size: 18px; color: #5a5648;
+  }
+  code { background: var(--paper-2); padding: 1px 6px; border: 1px solid var(--rule); font-size: 17px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="kicker">Visual Reference · "What Good Looks Like"</div>
+    <h1>The Threshold</h1>
+    <div class="sub">A short exploration-puzzle adventure · Gameboy register · D-pad + A/B only</div>
+  </header>
+
+  <div class="legend">
+    <div><b>Native res:</b> 160×144, scaled ×3</div>
+    <div class="swatches"><b>Forest palette:</b>
+      <span class="sw" style="background:#1b211a"></span>
+      <span class="sw" style="background:#3a4a39"></span>
+      <span class="sw" style="background:#6f7d5a"></span>
+      <span class="sw" style="background:#aeb38c"></span>
+    </div>
+    <div><b>Controls:</b> D-pad move · A interact/confirm · B cancel/back</div>
+  </div>
+
+  <!-- SHOT 1: FOREST -->
+  <section class="shot">
+    <div class="shot-head"><span class="shot-num">01</span><span class="shot-title">THE WOODS — Act I</span></div>
+    <p class="shot-note">Muted, foggy, low-contrast. Top-down. The deer watches and bolts if you rush it. No HUD, no quest marker — the player learns to <em>look</em>. All paths funnel toward the cabin.</p>
+    <div class="pair">
+      <div class="screen-wrap"><canvas id="c1" width="160" height="144"></canvas></div>
+      <div class="caption">
+        <b>Atmosphere over information.</b>
+        Fog vignette at screen edges. Tiles dithered, never flat. The deer (top-right) is the first lesson: the world reacts to <em>how</em> you move. Semi-transparent D-pad + A/B always present.
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOT 2: CABIN INTERIOR + OBJECT -->
+  <section class="shot">
+    <div class="shot-head"><span class="shot-num">02</span><span class="shot-title">THE CABIN — the object & the choice</span></div>
+    <p class="shot-note">Amber, intimate, still. A single room. On the table: an unnamed artifact (pale bone bowl, a light turning over inside it). Walk up, press <em>A</em>, get the yes/no.</p>
+    <div class="pair">
+      <div class="screen-wrap"><canvas id="c2" width="160" height="144"></canvas></div>
+      <div class="caption">
+        <b>The interaction beat.</b>
+        Dialogue box is the classic bordered GB style: double border, type-on text, blinking ▼. The choice — <em>Use it / Not yet</em> — is the only "menu" in the game, reachable with just A/B.
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOT 3: THE THRESHOLD TRANSITION -->
+  <section class="shot">
+    <div class="shot-head"><span class="shot-num">03</span><span class="shot-title">THE THRESHOLD — the warp</span></div>
+    <p class="shot-note">The bespoke transition. Amber light collapses to a single point, geometry blooms outward, the forest palette shatters. ~2 seconds. This is the hinge of the whole game — it must feel like the floor changing.</p>
+    <div class="pair">
+      <div class="screen-wrap"><canvas id="c3" width="160" height="144"></canvas></div>
+      <div class="caption">
+        <b>Spend the restraint budget here.</b>
+        Concentric rings, radial distortion, palette mid-shift (forest greens bleeding into hyperspace color). Player sprite dissolving into pixels at center.
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOT 4: HYPERSPACE ENTITY -->
+  <section class="shot">
+    <div class="shot-head"><span class="shot-num">04</span><span class="shot-title">HYPERSPACE — entity encounter (Act III)</span></div>
+    <p class="shot-note">Everything inverts. High-saturation color, tiling/breathing geometry, the pixel grid <em>misbehaving</em>. Single-screen rooms, each holding one entity = one dialogue puzzle = one piece of the payload.</p>
+    <div class="pair">
+      <div class="screen-wrap"><canvas id="c4" width="160" height="144"></canvas></div>
+      <div class="caption">
+        <b>The payoff register.</b>
+        "The Weaver" sits at the center of a pattern that IS the room. Animated scrolling ground, floating forest-symbols recontextualized. Same dialogue box, but inverted palette. No combat — challenge is comprehension.
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOT 5: THE RETURN / TRANSFORMED FOREST -->
+  <section class="shot">
+    <div class="shot-head"><span class="shot-num">05</span><span class="shot-title">THE RETURN — same map, re-lit</span></div>
+    <p class="shot-note">Wake in the cabin, walk back into the woods. <em>Same forest map</em>, one flag flipped (<code>hasCrossed</code>). The shrine bowl can be filled, the deer no longer bolts, carved stones now read as language, new paths open. The second pass is the real treasure hunt.</p>
+    <div class="pair">
+      <div class="screen-wrap"><canvas id="c5" width="160" height="144"></canvas></div>
+      <div class="caption">
+        <b>One boolean, whole new game.</b>
+        Built once, experienced twice. Symbols that were decoration in Shot 01 now glow and parse. This is the "hidden easter eggs" pleasure delivered structurally, not as scattered gimmicks.
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    Reference mockups rendered at native 160×144. These illustrate <b>composition, palette, mood, and UI</b> — not final art. Hand the build brief to Claude Code and use these as the visual target.
+  </footer>
+
+</div>
+
+<script>
+// ---- Shared pixel canvas helpers ----
+function setup(id) {
+  const cvs = document.getElementById(id);
+  const ctx = cvs.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
+  return ctx;
+}
+function px(ctx, x, y, w, h, col) { ctx.fillStyle = col; ctx.fillRect(x, y, w, h); }
+
+// Draw a sprite from a string grid with a palette map
+function sprite(ctx, grid, dx, dy, pal, alpha=1) {
+  ctx.globalAlpha = alpha;
+  for (let y=0;y<grid.length;y++) for (let x=0;x<grid[y].length;x++){
+    const ch = grid[y][x];
+    if (ch===' '||ch==='.') continue;
+    ctx.fillStyle = pal[ch];
+    ctx.fillRect(dx+x, dy+y, 1, 1);
+  }
+  ctx.globalAlpha = 1;
+}
+
+// Forest palette
+const F = { '0':'#1b211a','1':'#3a4a39','2':'#6f7d5a','3':'#aeb38c' };
+// Cabin (amber-shifted, still 4 tones)
+const A = { '0':'#241a12','1':'#4a3320','2':'#8a6a3a','3':'#d8b873' };
+// Hyperspace (the only saturated palette)
+const HS = { '0':'#10031f','1':'#5d12a8','2':'#e0379b','3':'#ffe14d','4':'#22e0c8','5':'#ff6b35' };
+
+// Dither fill helper for textured ground
+function dither(ctx, x0,y0,x1,y1, a, b) {
+  for (let y=y0;y<y1;y++) for (let x=x0;x<x1;x++){
+    ctx.fillStyle = ((x+y)%2===0)?a:b;
+    ctx.fillRect(x,y,1,1);
+  }
+}
+
+// Touch overlay drawn on every screen (semi-transparent GB-emulator style)
+function drawOverlay(ctx, dark) {
+  const c = dark ? 'rgba(255,255,255,0.22)' : 'rgba(0,0,0,0.28)';
+  const cb = dark ? 'rgba(255,255,255,0.38)' : 'rgba(0,0,0,0.45)';
+  // D-pad bottom-left
+  ctx.fillStyle = c;
+  // up
+  ctx.fillRect(16,116,8,8);
+  // down
+  ctx.fillRect(16,132,8,8);
+  // left
+  ctx.fillRect(8,124,8,8);
+  // right
+  ctx.fillRect(24,124,8,8);
+  // center
+  ctx.fillRect(16,124,8,8);
+  // A button bottom-right
+  ctx.fillStyle = c;
+  ctx.beginPath(); ctx.arc(146,126,8,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle = cb; ctx.lineWidth=1; ctx.stroke();
+  // B button
+  ctx.fillStyle = c;
+  ctx.beginPath(); ctx.arc(126,134,7,0,Math.PI*2); ctx.fill();
+  ctx.stroke();
+  // labels
+  ctx.fillStyle = cb;
+  ctx.font = '8px monospace';
+  ctx.fillText('A',143,129);
+  ctx.fillText('B',123,137);
+}
+
+// Classic dialogue box
+function dialogue(ctx, lines, pal, choice) {
+  const bx=4, by=92, bw=152, bh=48;
+  px(ctx,bx,by,bw,bh,pal['0']);
+  px(ctx,bx+2,by+2,bw-4,bh-4,pal['3']);
+  // inner accent border
+  ctx.fillStyle=pal['0'];
+  ctx.fillRect(bx+4,by+4,bw-8,1);
+  ctx.fillRect(bx+4,by+bh-5,bw-8,1);
+  ctx.fillRect(bx+4,by+4,1,bh-8);
+  ctx.fillRect(bx+bw-5,by+4,1,bh-8);
+  // text
+  ctx.fillStyle=pal['0'];
+  ctx.font='7px "VT323", monospace';
+  ctx.textBaseline='top';
+  lines.forEach((l,i)=> ctx.fillText(l, bx+9, by+9+i*9));
+  if (choice) {
+    // little choice arrow
+    ctx.fillText('\u25B8', bx+9, by+9+choice.sel*9);
+  } else {
+    // blinking continue arrow (static here)
+    ctx.fillText('\u25BC', bx+bw-13, by+bh-12);
+  }
+}
+
+const trees = [
+  '...000...',
+  '..01110..',
+  '.0111110.',
+  '0111111110'.slice(0,9),
+  '.0111110.',
+  '..01110..',
+  '...010...',
+  '...010...',
+  '..00000..'
+];
+
+// ============ SHOT 1: FOREST ============
+(function(){
+  const ctx = setup('c1');
+  // ground dither
+  dither(ctx,0,0,160,144,F['2'],F['1']);
+  // scattered grass detail
+  ctx.fillStyle=F['1'];
+  for(let i=0;i<60;i++){ const x=(i*53)%160, y=(i*37)%144; ctx.fillRect(x,y,1,1); }
+  // path winding up toward cabin (lighter dither)
+  for(let y=0;y<144;y++){
+    const cx = 80 + Math.sin(y/30)*28;
+    dither(ctx, cx-10, y, cx+10, y+1, F['3'], F['2']);
+  }
+  // trees
+  const treePal={'0':F['0'],'1':F['1']};
+  const spots=[[6,8],[120,4],[18,60],[132,72],[8,108],[140,110],[60,20]];
+  spots.forEach(([x,y])=> sprite(ctx, trees, x,y, treePal));
+  // deer top-right (alert)
+  const deer=[
+    '..0..0..',
+    '..0..0..',
+    '.000000.',
+    '00000000',
+    '0000000.',
+    '.0....0.',
+    '.0....0.',
+    '00....00'
+  ];
+  sprite(ctx, deer, 112, 30, {'0':F['0']});
+  // player (lower middle on path)
+  const pl=[
+    '.0000.',
+    '011110',
+    '010010',
+    '011110',
+    '.0110.',
+    '01111 0'.slice(0,6),
+    '0.00.0',
+    '0....0'
+  ];
+  sprite(ctx, pl, 76, 96, {'0':F['0'],'1':F['2']});
+  // fog vignette
+  const g=ctx.createRadialGradient(80,72,30,80,72,110);
+  g.addColorStop(0,'rgba(174,179,140,0)');
+  g.addColorStop(1,'rgba(174,179,140,0.55)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,160,144);
+  drawOverlay(ctx, false);
+})();
+
+// ============ SHOT 2: CABIN ============
+(function(){
+  const ctx = setup('c2');
+  // floor
+  dither(ctx,0,0,160,92,A['1'],A['0']);
+  // floorboards
+  ctx.fillStyle=A['0'];
+  for(let y=10;y<92;y+=12) ctx.fillRect(0,y,160,1);
+  // back wall
+  px(ctx,0,0,160,28,A['0']);
+  dither(ctx,0,0,160,26,A['1'],A['0']);
+  // window glowing
+  px(ctx,18,6,28,16,A['0']);
+  px(ctx,20,8,24,12,A['3']);
+  ctx.fillStyle=A['2']; ctx.fillRect(31,8,1,12); ctx.fillRect(20,13,24,1);
+  // shelf with books
+  px(ctx,108,6,44,4,A['0']);
+  const bookcols=[A['2'],A['3'],A['1'],A['2'],A['3'],A['1'],A['2']];
+  bookcols.forEach((c,i)=>{ px(ctx,110+i*6,2,4,4,c); });
+  // table center
+  px(ctx,56,44,48,18,A['0']);
+  px(ctx,58,46,44,10,A['1']);
+  px(ctx,60,60,4,14,A['0']); px(ctx,96,60,4,14,A['0']);
+  // the object: bone bowl with light inside
+  px(ctx,72,40,16,8,A['0']);
+  px(ctx,74,41,12,5,A['3']);
+  // glowing core
+  ctx.fillStyle=A['3'];
+  ctx.globalAlpha=0.9; ctx.fillRect(78,42,4,3); ctx.globalAlpha=1;
+  ctx.fillStyle='#fff'; ctx.fillRect(79,43,2,1);
+  // little glow halo
+  const gg=ctx.createRadialGradient(80,43,1,80,43,16);
+  gg.addColorStop(0,'rgba(216,184,115,0.7)');
+  gg.addColorStop(1,'rgba(216,184,115,0)');
+  ctx.fillStyle=gg; ctx.fillRect(64,30,32,26);
+  // player approaching from below
+  const pl=['.0000.','011110','010010','011110','.0110.','011110','0.00.0','0....0'];
+  sprite(ctx, pl, 77, 74, {'0':A['0'],'1':A['2']});
+  // dialogue with choice
+  dialogue(ctx, ['A bowl of pale bone.','A light turns over,','slowly. It is warm.'], A, {sel:0});
+  // choice options drawn over the box bottom — simulate
+  ctx.fillStyle=A['0']; ctx.font='7px "VT323",monospace';
+  ctx.fillText('Use it.', 60, 92+9+27);
+  ctx.fillText('Not yet.', 60, 92+9+36);
+  // re-draw arrow at first option
+  ctx.fillText('\u25B8', 52, 92+9+27);
+  drawOverlay(ctx, false);
+})();
+
+// ============ SHOT 3: THRESHOLD WARP ============
+(function(){
+  const ctx = setup('c3');
+  // base: mid-transition, palette bleeding
+  px(ctx,0,0,160,144,'#0a0612');
+  // concentric rings from center, color shifting forest->hyperspace
+  const cx=80, cy=72;
+  const ringCols=['#3a4a39','#6f7d5a','#8a6a3a','#d8b873','#e0379b','#5d12a8','#ffe14d','#22e0c8'];
+  for(let r=80;r>4;r-=6){
+    ctx.strokeStyle=ringCols[(Math.floor(r/6))%ringCols.length];
+    ctx.lineWidth=2;
+    ctx.globalAlpha=0.85;
+    ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // radial spokes
+  for(let a=0;a<12;a++){
+    const ang=a*Math.PI/6;
+    ctx.strokeStyle = a%2? '#ffe14d':'#e0379b';
+    ctx.globalAlpha=0.5;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(ang)*90, cy+Math.sin(ang)*90); ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // player dissolving at center into pixels
+  ctx.fillStyle='#fff';
+  for(let i=0;i<40;i++){
+    const ang=Math.random()*Math.PI*2, d=Math.random()*22;
+    ctx.globalAlpha=1-d/22;
+    ctx.fillRect(cx+Math.cos(ang)*d, cy+Math.sin(ang)*d, 2, 2);
+  }
+  ctx.globalAlpha=1;
+  // bright core
+  const gc=ctx.createRadialGradient(cx,cy,0,cx,cy,18);
+  gc.addColorStop(0,'rgba(255,255,255,1)');
+  gc.addColorStop(0.5,'rgba(255,225,77,0.8)');
+  gc.addColorStop(1,'rgba(255,225,77,0)');
+  ctx.fillStyle=gc; ctx.fillRect(cx-18,cy-18,36,36);
+  drawOverlay(ctx, true);
+})();
+
+// ============ SHOT 4: HYPERSPACE ENTITY ============
+(function(){
+  const ctx = setup('c4');
+  // breathing tiled ground
+  for(let y=0;y<144;y+=8) for(let x=0;x<160;x+=8){
+    const t=((x+y)/8)%3;
+    ctx.fillStyle = t===0?HS['0']:t===1?HS['1']:HS['5'];
+    ctx.globalAlpha=0.55;
+    ctx.fillRect(x,y,8,8);
+  }
+  ctx.globalAlpha=1;
+  // perspective pattern lines converging to entity
+  const cx=80,cy=46;
+  for(let a=0;a<16;a++){
+    const ang=a*Math.PI/8;
+    ctx.strokeStyle=a%2?HS['2']:HS['3'];
+    ctx.globalAlpha=0.4; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+Math.cos(ang)*120, cy+Math.sin(ang)*120); ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // floating recontextualized forest symbols
+  ctx.fillStyle=HS['4'];
+  [[20,20],[140,16],[30,70],[134,64]].forEach(([x,y])=>{
+    ctx.fillRect(x,y,2,8); ctx.fillRect(x-3,y+3,8,2);
+  });
+  // THE WEAVER — geometric entity at center
+  const weaver=[
+    '....333....',
+    '...32223...',
+    '..3211123..',
+    '.321040123'.slice(0,11),
+    '32104440123'.slice(0,11),
+    '.321040123'.slice(0,11),
+    '..3211123..',
+    '...32223...',
+    '....333....'
+  ];
+  // build manually for richness
+  const wpal={'0':HS['0'],'1':HS['1'],'2':HS['2'],'3':HS['3'],'4':HS['3']};
+  // diamond body
+  function diamond(ctx,cx,cy,size,cols){
+    for(let dy=-size;dy<=size;dy++){
+      const w=size-Math.abs(dy);
+      for(let dx=-w;dx<=w;dx++){
+        const d=Math.abs(dx)+Math.abs(dy);
+        ctx.fillStyle=cols[d%cols.length];
+        ctx.fillRect(cx+dx,cy+dy,1,1);
+      }
+    }
+  }
+  diamond(ctx,80,42,18,[HS['3'],HS['2'],HS['1'],HS['4'],HS['5']]);
+  // glowing eye
+  ctx.fillStyle='#fff'; ctx.fillRect(78,40,4,4);
+  ctx.fillStyle=HS['0']; ctx.fillRect(79,41,2,2);
+  // halo
+  const gh=ctx.createRadialGradient(80,42,4,80,42,30);
+  gh.addColorStop(0,'rgba(255,225,77,0.5)');
+  gh.addColorStop(1,'rgba(255,225,77,0)');
+  ctx.fillStyle=gh; ctx.fillRect(50,12,60,60);
+  // dialogue (inverted palette)
+  const HD={'0':HS['3'],'3':HS['0']};
+  dialogue(ctx, ['THE WEAVER:','I am still rendering','the woods you left.'], HD);
+  drawOverlay(ctx, true);
+})();
+
+// ============ SHOT 5: RETURN / TRANSFORMED FOREST ============
+(function(){
+  const ctx = setup('c5');
+  // same forest base, slightly warmer/clearer (fog lifted)
+  dither(ctx,0,0,160,144,F['2'],F['1']);
+  ctx.fillStyle=F['1'];
+  for(let i=0;i<40;i++){ const x=(i*53)%160, y=(i*37)%144; ctx.fillRect(x,y,1,1); }
+  // path
+  for(let y=0;y<144;y++){
+    const cx = 80 + Math.sin(y/30)*28;
+    dither(ctx, cx-10, y, cx+10, y+1, F['3'], F['2']);
+  }
+  const treePal={'0':F['0'],'1':F['1']};
+  [[6,8],[120,4],[18,60],[132,72],[8,108],[140,110]].forEach(([x,y])=> sprite(ctx, trees, x,y, treePal));
+  // THE SHRINE — now active, bowl filled & glowing
+  px(ctx,60,40,40,30,F['0']);
+  px(ctx,64,44,32,22,F['1']);
+  px(ctx,72,36,16,10,F['0']); // bowl
+  px(ctx,74,37,12,6,F['3']);
+  // glow from filled bowl
+  const sg=ctx.createRadialGradient(80,40,2,80,40,24);
+  sg.addColorStop(0,'rgba(255,240,180,0.8)');
+  sg.addColorStop(1,'rgba(255,240,180,0)');
+  ctx.fillStyle=sg; ctx.fillRect(56,18,48,44);
+  // carved stones now glowing with readable symbols
+  ctx.fillStyle=F['3'];
+  [[24,90],[130,40],[40,120]].forEach(([x,y])=>{
+    px(ctx,x,y,10,12,F['0']);
+    ctx.fillStyle='#fff7d6';
+    ctx.fillRect(x+3,y+3,1,6); ctx.fillRect(x+6,y+3,1,6); ctx.fillRect(x+3,y+6,4,1);
+    ctx.fillStyle=F['3'];
+  });
+  // deer now calm, close to player
+  const deer=['..0..0..','..0..0..','.000000.','00000000','0000000.','.0....0.','.0....0.','00....00'];
+  sprite(ctx, deer, 96, 96, {'0':F['1']});
+  // player
+  const pl=['.0000.','011110','010010','011110','.0110.','011110','0.00.0','0....0'];
+  sprite(ctx, pl, 70, 100, {'0':F['0'],'1':F['2']});
+  // only a light fog now — clearer than shot 1
+  const g=ctx.createRadialGradient(80,72,60,80,72,120);
+  g.addColorStop(0,'rgba(174,179,140,0)');
+  g.addColorStop(1,'rgba(174,179,140,0.28)');
+  ctx.fillStyle=g; ctx.fillRect(0,0,160,144);
+  drawOverlay(ctx, false);
+})();
+</script>
+</body>
+</html>

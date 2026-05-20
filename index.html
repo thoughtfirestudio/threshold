@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>THE THRESHOLD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      background: #0d0d0d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    #game-wrap {
+      padding: 14px;
+      background: #2b2b2b;
+      border-radius: 6px 6px 18px 6px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+    }
+
+    #game {
+      display: block;
+      /* Native: 160×144. Scaled up ×3 → 480×432. */
+      width: 480px;
+      height: 432px;
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+      cursor: none;
+    }
+
+    /* On smaller viewports (phones) let the canvas shrink to fit */
+    @media (max-width: 520px) {
+      #game-wrap { padding: 8px; border-radius: 4px 4px 12px 4px; }
+      #game { width: calc(100vw - 16px); height: calc((100vw - 16px) * 0.9); }
+    }
+  </style>
+</head>
+<body>
+  <div id="game-wrap">
+    <canvas id="game" width="160" height="144"></canvas>
+  </div>
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
