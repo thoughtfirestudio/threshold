@@ -66,15 +66,15 @@ window.addEventListener('keyup', e => {
 // --- Touch overlay ---
 // Overlay button hit areas defined in 160×144 canvas space (matching renderer's drawOverlay).
 //
-// D-pad cross:
-//   up:    x=16,y=116,w=8,h=8
-//   down:  x=16,y=132,w=8,h=8
-//   left:  x=8, y=124,w=8,h=8
-//   right: x=24,y=124,w=8,h=8
-//   center:x=16,y=124,w=8,h=8  (dead zone — no action)
+// D-pad cross (16×16 cells):
+//   up:    x=18,y=96, w=16,h=16
+//   down:  x=18,y=128,w=16,h=16
+//   left:  x=2, y=112,w=16,h=16
+//   right: x=34,y=112,w=16,h=16
+//   center:x=18,y=112,w=16,h=16  (dead zone — no action)
 //
-// A button: circle cx=146, cy=126, r=9
-// B button: circle cx=126, cy=134, r=8
+// A button: circle cx=148, cy=118, r=13
+// B button: circle cx=130, cy=134, r=11
 
 function hitRect(px, py, x, y, w, h) {
   return px >= x && px < x + w && py >= y && py < y + h;
@@ -85,15 +85,15 @@ function hitCircle(px, py, cx, cy, r) {
 }
 
 function getTouchAction(cx, cy) {
-  // A and B have priority (check circles first — they're in the corner)
-  if (hitCircle(cx, cy, 146, 126, 9)) return 'a';
-  if (hitCircle(cx, cy, 126, 134, 8)) return 'b';
-  // D-pad
-  if (hitRect(cx, cy, 16, 116,  8, 8)) return 'up';
-  if (hitRect(cx, cy, 16, 132,  8, 8)) return 'down';
-  if (hitRect(cx, cy,  8, 124,  8, 8)) return 'left';
-  if (hitRect(cx, cy, 24, 124,  8, 8)) return 'right';
-  if (hitRect(cx, cy, 16, 124,  8, 8)) return null; // center — dead zone
+  // A and B have priority (check circles first)
+  if (hitCircle(cx, cy, 148, 118, 13)) return 'a';
+  if (hitCircle(cx, cy, 130, 134, 11)) return 'b';
+  // D-pad (16×16 cells)
+  if (hitRect(cx, cy, 18,  96, 16, 16)) return 'up';
+  if (hitRect(cx, cy, 18, 128, 16, 16)) return 'down';
+  if (hitRect(cx, cy,  2, 112, 16, 16)) return 'left';
+  if (hitRect(cx, cy, 34, 112, 16, 16)) return 'right';
+  if (hitRect(cx, cy, 18, 112, 16, 16)) return null; // center dead zone
   return null;
 }
 

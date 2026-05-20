@@ -35,7 +35,7 @@ const player = {
 const room = ROOMS.cabin;
 
 function snapPlayerToTile() {
-  const { x, y } = tileToPixel(player.tileX, player.tileY, 6, 8);
+  const { x, y } = tileToPixel(player.tileX, player.tileY, 12, 16);
   player.px = x; player.py = y;
 }
 
@@ -79,7 +79,7 @@ const DIR_DELTA = { up:[0,-1], down:[0,1], left:[-1,0], right:[1,0] };
 function updatePlayer(dt) {
   if (player.moving) {
     player.moveTimer += dt;
-    const target = tileToPixel(player.tileX, player.tileY, 6, 8);
+    const target = tileToPixel(player.tileX, player.tileY, 12, 16);
     player.px += (target.x - player.px) * Math.min(dt * 14, 1);
     player.py += (target.y - player.py) * Math.min(dt * 14, 1);
     if (player.moveTimer >= MOVE_TIME) {
@@ -283,5 +283,5 @@ function drawArtifact() {
 function drawPlayer() {
   const sprites = { up: PLAYER_UP, down: PLAYER_DOWN, left: PLAYER_LEFT, right: PLAYER_RIGHT };
   sprite(sprites[player.facing] || PLAYER_DOWN,
-         Math.round(player.px), Math.round(player.py), PLAYER_PAL);
+         Math.round(player.px), Math.round(player.py), PLAYER_PAL, 1, 2);
 }

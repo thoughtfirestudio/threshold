@@ -79,7 +79,7 @@ export const endingScene = {
       const shown = Math.min(totalChars, Math.floor(textT * charsPerSec));
 
       ctx.fillStyle = F['2'];
-      ctx.font = '7px "VT323", monospace';
+      ctx.font = '10px "VT323", monospace';
       ctx.textBaseline = 'top';
       ctx.textAlign = 'center';
 
@@ -87,7 +87,7 @@ export const endingScene = {
       lines.forEach((line, i) => {
         const vis = line.slice(0, rem);
         rem -= line.length;
-        if (vis) ctx.fillText(vis, 80, 36 + i * 11);
+        if (vis) ctx.fillText(vis, 80, 28 + i * 14);
       });
 
       ctx.textAlign = 'left';
@@ -95,6 +95,7 @@ export const endingScene = {
       // Fade in "press A to continue" near the end
       if (textT > 3.5) {
         ctx.fillStyle = F['1'];
+        ctx.font = '10px "VT323", monospace';
         ctx.textAlign = 'center';
         ctx.fillText('(A to continue)', 80, 130);
         ctx.textAlign = 'left';

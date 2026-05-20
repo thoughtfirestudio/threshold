@@ -54,7 +54,7 @@ let autosaveCb = null;
 export function setHyperspaceAutosave(cb) { autosaveCb = cb; }
 
 function snapToTile() {
-  const { x, y } = tileToPixel(player.tileX, player.tileY, 6, 8);
+  const { x, y } = tileToPixel(player.tileX, player.tileY, 12, 16);
   player.px = x; player.py = y;
 }
 
@@ -138,7 +138,7 @@ function updatePlayer(dt) {
 
   if (player.moving) {
     player.moveTimer += dt;
-    const target = tileToPixel(player.tileX, player.tileY, 6, 8);
+    const target = tileToPixel(player.tileX, player.tileY, 12, 16);
     player.px += (target.x - player.px) * Math.min(dt * 14, 1);
     player.py += (target.y - player.py) * Math.min(dt * 14, 1);
     if (player.moveTimer >= MOVE_TIME) {
@@ -159,8 +159,7 @@ function updatePlayer(dt) {
     }
   }
 
-  if (!player.moving && (wasPressed('a') || window.__testInteract) && !talked) {
-    window.__testInteract = false;
+  if (!player.moving && wasPressed('a') && !talked) {
     checkInteract(room);
   }
 }
@@ -287,12 +286,10 @@ function drawEntityBackground(ctx) {
   } else if (currentEntity === 'twin') {
     // Twin: mirrors the player sprite but inverted colors
     const twinPal = { '0': HS['3'], '1': HS['2'] };
-    // Draw at entity position
-    const { x, y } = tileToPixel(5, 3, 6, 8);
-    sprite(PLAYER_DOWN, x, y, twinPal);
-    // It "mirrors" the player facing — slight visual echo
+    const { x, y } = tileToPixel(5, 3, 12, 16);
+    sprite(PLAYER_DOWN, x, y, twinPal, 1, 2);
     const mPal = { '0': HS['4'], '1': HS['1'] };
-    sprite(PLAYER_DOWN, x, y, mPal, 0.4);
+    sprite(PLAYER_DOWN, x, y, mPal, 0.4, 2);
   } else if (currentEntity === 'gardener') {
     // Gardener: floats above a lattice of growing symbols
     diamond(ctx, ecx, ecy, 12, [HS['4'], HS['3'], HS['2']]);
@@ -339,8 +336,7 @@ function diamond(ctx, cx, cy, size, colors) {
 
 function drawPlayer() {
   const spriteMap = { up: PLAYER_UP, down: PLAYER_DOWN, left: PLAYER_LEFT, right: PLAYER_RIGHT };
-  // Hyperspace player: slightly tinted
   const hsPal = { '0': HS['3'], '1': HS['0'] };
   sprite(spriteMap[player.facing] || PLAYER_DOWN,
-         Math.round(player.px), Math.round(player.py), hsPal);
+         Math.round(player.px), Math.round(player.py), hsPal, 1, 2);
 }

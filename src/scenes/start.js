@@ -74,38 +74,40 @@ export const startScene = {
 
       // Small kicker above
       ctx.fillStyle = F['2'];
-      ctx.font = '7px "VT323", monospace';
-      ctx.fillText('A SHORT EXPLORATION', 80, 30);
+      ctx.font = '10px "VT323", monospace';
+      ctx.fillText('A SHORT EXPLORATION', 80, 28);
 
       // Big title
       ctx.fillStyle = F['3'];
-      ctx.font = '14px "VT323", monospace';
-      ctx.fillText('THE THRESHOLD', 80, 44);
+      ctx.font = '18px "VT323", monospace';
+      ctx.fillText('THE THRESHOLD', 80, 42);
 
       // Subtitle
       ctx.fillStyle = F['2'];
-      ctx.font = '7px "VT323", monospace';
-      ctx.fillText('D-PAD + A + B', 80, 64);
+      ctx.font = '10px "VT323", monospace';
+      ctx.fillText('D-PAD + A + B', 80, 66);
 
       ctx.textAlign = 'left';
 
       if (st.mode === 'press') {
         if (st.blinkOn) {
           ctx.fillStyle = F['3'];
+          ctx.font = '10px "VT323", monospace';
           ctx.textAlign = 'center';
-          ctx.fillText('PRESS A TO BEGIN', 80, 100);
+          ctx.fillText('PRESS A TO BEGIN', 80, 98);
           ctx.textAlign = 'left';
         }
       } else {
         // Menu with two options
+        ctx.font = '10px "VT323", monospace';
         const opts = ['CONTINUE', 'NEW GAME'];
         opts.forEach((opt, i) => {
           ctx.fillStyle = st.sel === i ? F['3'] : F['2'];
           ctx.textAlign = 'center';
-          ctx.fillText(opt, 80, 95 + i * 13);
+          ctx.fillText(opt, 80, 94 + i * 16);
           if (st.sel === i && st.blinkOn) {
             ctx.textAlign = 'left';
-            ctx.fillText('\u25B8', 46, 95 + i * 13);
+            ctx.fillText('\u25B8', 42, 94 + i * 16);
           }
           ctx.textAlign = 'left';
         });

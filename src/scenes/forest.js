@@ -54,7 +54,7 @@ const player = {
 };
 
 function playerPixelTarget() {
-  const { x, y } = tileToPixel(player.tileX, player.tileY, 6, 8);
+  const { x, y } = tileToPixel(player.tileX, player.tileY, 12, 16);
   return { x, y };
 }
 
@@ -396,7 +396,7 @@ function drawShrine(bx, by) {
 function drawPlayer() {
   const sprites = { up: PLAYER_UP, down: PLAYER_DOWN, left: PLAYER_LEFT, right: PLAYER_RIGHT };
   sprite(sprites[player.facing] || PLAYER_DOWN,
-         Math.round(player.px), Math.round(player.py), PLAYER_PAL);
+         Math.round(player.px), Math.round(player.py), PLAYER_PAL, 1, 2);
 }
 
 function drawFog(pal) {
