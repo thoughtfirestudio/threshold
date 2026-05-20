@@ -87,8 +87,10 @@ function updatePlayer(dt) {
       player.moving = false;
       player.moveTimer = 0;
       checkExit();
-      if (player.queuedDir) {
+      if (player.queuedDir && isHeld(player.queuedDir)) {
         const d = player.queuedDir; player.queuedDir = null; tryMove(d);
+      } else {
+        player.queuedDir = null;
       }
     }
   } else {
@@ -263,11 +265,11 @@ function drawCabin() {
   px(120, 20, 20, 20, A['0']);         // frame
   px(122, 22, 16, 16, A['1']);         // surface
 
-  // Table: visually spans x=44–116, tiles (3,3) and (3,4) are wall
-  px(44, 58, 72, 22, A['0']);          // tabletop
-  px(46, 60, 68, 14, A['1']);          // surface
-  px(48, 82, 6, 20, A['0']);           // left leg
-  px(110, 82, 6, 20, A['0']);          // right leg
+  // Table: cols 2–4, rows 3–4 = x=40–100, y=60–100
+  px(40, 60, 60, 20, A['0']);          // tabletop (x=40 to x=100)
+  px(42, 62, 56, 12, A['1']);          // surface highlight
+  px(44, 80, 6, 20, A['0']);           // left leg
+  px(90, 80, 6, 20, A['0']);           // right leg
 
   // Tea at tile (2,5): x=40–60, y=100–120
   px(44, 106, 12, 8, A['1']);          // cup body
@@ -280,8 +282,8 @@ function drawArtifact() {
   const ctx = getCtx();
 
   // Bowl centered on table: ARTIFACT_BOWL 6×4 at 2× = 12×8
-  // Table surface at y=60–74; bowl sits at y=50 (floating above)
-  const bx = 74, by = 50;
+  // Table col 3 center = x=70; y=52 puts it sitting on the table surface
+  const bx = 64, by = 52;
   sprite(ARTIFACT_BOWL, bx, by, BOWL_PAL, 1, 2);
 
   // Glowing core (center of 12×8 sprite)
@@ -290,8 +292,7 @@ function drawArtifact() {
   ctx.fillRect(bx + 4, by + 2, 4, 3);
   ctx.globalAlpha = 1;
 
-  // Halo
-  const gg = ctx.createRadialGradient(bx+6, by+4, 1, bx+6, by+4, 26);
+  const gg = ctx.createRadialGradient(bx+6, by+4, 1, bx+6, by+4, 24);
   gg.addColorStop(0, `rgba(216,184,115,${glow * 0.6})`);
   gg.addColorStop(1, 'rgba(216,184,115,0)');
   ctx.fillStyle = gg;

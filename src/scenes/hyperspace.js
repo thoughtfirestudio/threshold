@@ -144,8 +144,10 @@ function updatePlayer(dt) {
     if (player.moveTimer >= MOVE_TIME) {
       snapToTile();
       player.moving = false; player.moveTimer = 0;
-      if (player.queuedDir) {
+      if (player.queuedDir && isHeld(player.queuedDir)) {
         const d = player.queuedDir; player.queuedDir = null; tryMove(d, room);
+      } else {
+        player.queuedDir = null;
       }
     }
   } else {

@@ -82,8 +82,8 @@ export const ROOMS = {
       [1,1,1,1,1,1,1,1],  // row 0 — back wall
       [1,0,0,0,0,0,0,1],  // row 1 — window, journal, books, mirror
       [1,0,0,0,0,0,0,1],  // row 2
-      [1,0,0,1,0,0,0,1],  // row 3 — table (col 3 blocked), artifact on table
-      [1,0,0,1,0,0,0,1],  // row 4 — table continues
+      [1,0,1,1,1,0,0,1],  // row 3 — table blocks cols 2,3,4; artifact above table (col 3)
+      [1,0,1,1,1,0,0,1],  // row 4 — table continues
       [1,0,0,0,0,0,0,1],  // row 5 — player arrives, tea
       [1,1,1,0,0,1,1,1],  // row 6 — exit south at cols 3,4
     ],
@@ -91,7 +91,7 @@ export const ROOMS = {
       { edge: 's', destRoom: 'forest_3', destX: 4, destY: 0 },
     ],
     objects: [
-      { x: 3, y: 3, id: 'artifact' },
+      { x: 3, y: 2, id: 'artifact' },  // just above table surface
       { x: 1, y: 1, id: 'window' },
       { x: 6, y: 1, id: 'mirror' },
       { x: 5, y: 1, id: 'books' },

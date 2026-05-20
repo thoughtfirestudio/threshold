@@ -160,11 +160,13 @@ function updatePlayer(dt) {
       player.moving = false;
       player.moveTimer = 0;
       checkExit();
-      // Apply queued direction immediately
-      if (player.queuedDir) {
+      // Only continue moving if the direction is still held (not a brief tap)
+      if (player.queuedDir && isHeld(player.queuedDir)) {
         const d = player.queuedDir;
         player.queuedDir = null;
         tryMove(d);
+      } else {
+        player.queuedDir = null;
       }
     }
   } else {
