@@ -343,7 +343,7 @@ function diamond(ctx, cx, cy, size, colors) {
 
 function drawPlayer() {
   const spriteMap = { up: PLAYER_UP, down: PLAYER_DOWN, left: PLAYER_LEFT, right: PLAYER_RIGHT };
-  const hsPal = { '0': HS['3'], '1': HS['0'] };
+  const hsPal = { '0': HS['3'], '1': HS['0'], '2': HS['4'] };
   sprite(spriteMap[player.facing] || PLAYER_DOWN,
          Math.round(player.px), Math.round(player.py), hsPal, 1, 2);
 }

@@ -30,7 +30,7 @@ const MOVE_TIME = 0.14; // seconds per tile
 const DEER_NERVE_THRESH = 1.4; // seconds of continuous close approach before deer bolts
 const DEER_FLEE_DIST = 4;      // tiles (manhattan) — inside this, nervous timer ticks
 
-const PLAYER_PAL = { '0': F['0'], '1': F['2'] };
+const PLAYER_PAL = { '0': F['0'], '1': F['1'], '2': F['3'] };
 const DEER_PAL_A = { '0': F['0'] };       // alert — darkest silhouette
 const DEER_PAL_C = { '0': F['1'] };       // calm  — slightly lighter
 const MUSH_PAL   = { '0': F['0'], '1': F['2'] };

@@ -20,8 +20,8 @@ export function getTile(tx, ty, tiles) {
 }
 
 export function drawTiles(tiles, pal) {
-  // Tree palette: outline slightly lighter than bg so it reads, canopy = mid green
-  const treePal = { '0': pal['1'], '1': pal['2'] };
+  // Tree palette: dark outline, mid canopy, lighter highlight spots (Pokemon Gold style)
+  const treePal = { '0': pal['0'], '1': pal['1'], '2': pal['2'] };
 
   // Ground base — flat solid fill (Pokemon-style clean grass)
   px(0, 0, 160, 144, pal['2']);

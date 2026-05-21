@@ -4,65 +4,69 @@
 // Keep sprites small (8×8, 9×9, 16×16) — we live in 160×144 space.
 
 // 8×8 round tree (drawn at 2× = 16×16, fills one tile).
-// Palette: '0'=outline/trunk, '1'=canopy body
+// Pokemon Gold-style: round canopy with 4 lighter highlight patches, dark trunk.
+// Palette: '0'=dark outline/trunk, '1'=canopy body, '2'=canopy highlight spots
 export const TREE = [
   '.011110.',
+  '01211210',
+  '01221210',
   '01111110',
-  '01111110',
-  '01111110',
-  '01111110',
-  '.011110.',
+  '01221210',
+  '.012210.',
   '..0110..',
   '..0000..',
 ];
 
-// 6×8 player sprite (facing down, default)
-// Palette: '0'=outline, '1'=body
+// 6×8 player sprite — Pokemon Gold overworld style.
+// Palette: '0'=dark outline, '1'=clothing/body, '2'=skin tone
+// Drawn at 2× = 12×16px. Hat, face, body, legs all distinct.
+
+// Facing down — can see face
 export const PLAYER_DOWN = [
   '.0000.',
+  '.1221.',
   '011110',
-  '010010',
   '011110',
   '.0110.',
   '011110',
-  '0.00.0',
+  '0.11.0',
   '0....0',
 ];
 
-// 6×8 player facing up
+// Facing up — back of head, backpack visible
 export const PLAYER_UP = [
   '.0000.',
+  '.1111.',
   '011110',
-  '011110',
-  '011110',
+  '011210',
   '.0110.',
   '011110',
-  '0.00.0',
+  '0.11.0',
   '0....0',
 ];
 
-// 6×8 player facing left
+// Facing left
 export const PLAYER_LEFT = [
   '.0000.',
+  '.1221.',
   '011110',
-  '01.110',
   '011110',
   '.0110.',
-  '011110',
-  '00.0.0',
-  '0....0',
+  '.01110',
+  '0.110.',
+  '0.....',
 ];
 
-// 6×8 player facing right
+// Facing right
 export const PLAYER_RIGHT = [
   '.0000.',
+  '.1221.',
   '011110',
-  '0110.0',
   '011110',
   '.0110.',
   '011110',
-  '0.0.00',
-  '0....0',
+  '.0110.',
+  '.....0',
 ];
 
 // 8×8 deer — alert posture (head raised, legs apart)

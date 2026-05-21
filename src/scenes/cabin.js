@@ -18,7 +18,7 @@ import {
 } from '../data/sprites.js';
 
 const A = PALETTES.CABIN;
-const PLAYER_PAL = { '0': A['0'], '1': A['2'] };
+const PLAYER_PAL = { '0': A['0'], '1': A['1'], '2': A['3'] };
 const BOWL_PAL   = { '0': A['0'], '1': A['1'], '3': A['3'] };
 
 const MOVE_TIME = 0.14;
