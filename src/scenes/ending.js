@@ -6,7 +6,7 @@ import { transition } from '../engine/scene.js';
 import { flags, setFlag } from '../engine/flags.js';
 import { PALETTES } from '../data/palettes.js';
 
-const F = PALETTES.FOREST;
+const F  = PALETTES.FOREST;  // kept for text color
 const HS = PALETTES.HYPERSPACE;
 
 let t = 0;
@@ -16,22 +16,23 @@ let textT = 0;
 
 const TEXTS = {
   0: [  // "I'm ready."
-    'You wake in the cabin.',
-    'The tea is gone.',
-    'The mirror moves with you.',
+    'The smoke moves through you.',
+    'Something ancient',
+    'turns over, slowly.',
     '',
-    'The journal is in your hand.',
-    'The last line reads:',
-    '"Go back into the woods."',
+    'You know what you know.',
+    'You have always known it.',
+    '',
+    'Wake up.',
   ],
-  1: [  // "Wait."
-    'You wake in the cabin.',
-    'Everything is the same.',
-    'Except you.',
+  1: [  // "Not yet."
+    'The smoke waits.',
     '',
-    'The door is open.',
-    'The forest is waiting.',
-    'It always was.',
+    'The hall is always here.',
+    'Behind every door',
+    'you have ever opened.',
+    '',
+    'Return when you are ready.',
   ],
 };
 
@@ -55,8 +56,8 @@ export const endingScene = {
       if (textT > 5.0) { phase = 'fadeout'; t = 0; }
     } else if (phase === 'fadeout') {
       if (t > 1.5) {
-        // Wake in cabin
-        transition('cabin', { x: 4, y: 7 });
+        // Return to beginning of the hall — doors are open now
+        transition('hall', { room: 'hall_1' });
       }
     }
   },

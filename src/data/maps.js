@@ -1,113 +1,83 @@
 // All room tile maps — 10×9 grid, 16px tiles = 160×144 (GBC native)
-// Tile values: 0=ground (walkable), 1=wall (blocked), 2=path (walkable)
+// Tile values: 0=ground (walkable), 1=wall (blocked)
 //
-// exits: { edge:'n'|'s'|'e'|'w', destRoom, destX, destY }
+// Hall rooms: linear corridor, Elite Four style.
+// North wall has walkable doorway at cols 4-5 (tile=0).
+// Player exits north from row 0 — scene handles door logic.
+// exits: not used for hall (scene handles room transitions directly)
 // objects: { x, y, id }
-// startX/Y: default player position entering room
 
 export const ROOMS = {
 
-  // ── FOREST 1 — Opening. Deer in the upper clearing.
-  forest_1: {
+  // ── HALL 1 — The Warden's chamber.
+  hall_1: {
     tiles: [
-      [1,1,1,1,0,2,0,1,1,1],  // row 0 — exit north
-      [1,1,0,0,0,2,0,0,1,1],  // row 1
-      [1,0,0,0,0,2,0,0,0,1],  // row 2 — open clearing
-      [1,0,0,1,0,2,0,0,0,1],  // row 3 — isolated wall tree col 3
-      [1,1,0,0,0,2,0,0,1,1],  // row 4
-      [1,1,1,0,0,2,0,1,1,1],  // row 5
-      [1,1,1,0,0,2,0,1,1,1],  // row 6
-      [1,1,1,1,0,2,0,1,1,1],  // row 7 — player starts
-      [1,1,1,1,1,2,1,1,1,1],  // row 8 — solid south wall
+      [1,1,1,1,0,0,1,1,1,1],  // row 0 — north doorway cols 4-5
+      [1,0,0,0,0,0,0,0,0,1],  // row 1
+      [1,0,0,0,0,1,0,0,0,1],  // row 2 — figure at col 5
+      [1,0,0,0,0,0,0,0,0,1],  // row 3
+      [1,0,0,0,0,0,0,0,0,1],  // row 4
+      [1,0,0,0,0,0,0,0,0,1],  // row 5
+      [1,0,0,0,0,0,0,0,0,1],  // row 6
+      [1,0,0,0,0,0,0,0,0,1],  // row 7 — player starts
+      [1,1,1,1,0,0,1,1,1,1],  // row 8 — south wall with opening
     ],
-    exits: [
-      { edge: 'n', destRoom: 'forest_2', destX: 5, destY: 8 },
-    ],
-    objects: [
-      { x: 7, y: 2, id: 'deer' },
-      { x: 6, y: 4, id: 'mushrooms_1' },
-    ],
+    exits: [],
+    objects: [{ x: 5, y: 2, id: 'figure_1' }],
     startX: 5, startY: 7,
   },
 
-  // ── FOREST 2 — Shrine. Mushroom ring.
-  forest_2: {
+  // ── HALL 2 — The Witness's chamber.
+  hall_2: {
     tiles: [
-      [1,1,1,0,0,2,0,1,1,1],  // row 0 — exit north
-      [1,1,0,0,0,2,0,0,1,1],  // row 1
-      [1,0,0,0,0,2,0,0,0,1],  // row 2
-      [1,0,0,0,0,2,0,0,0,1],  // row 3
-      [1,0,0,0,0,2,0,0,0,1],  // row 4 — shrine left (2,4)
-      [1,0,0,0,0,2,0,0,0,1],  // row 5
-      [1,1,0,0,0,2,0,0,1,1],  // row 6
-      [1,1,1,0,0,2,0,1,1,1],  // row 7
-      [1,1,1,1,0,2,0,1,1,1],  // row 8 — exit south
+      [1,1,1,1,0,0,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,1,0,0,0,1],  // figure at col 5
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,0,0,1,1,1,1],
     ],
-    exits: [
-      { edge: 'n', destRoom: 'forest_3', destX: 5, destY: 8 },
-      { edge: 's', destRoom: 'forest_1', destX: 5, destY: 0 },
-    ],
-    objects: [
-      { x: 2, y: 4, id: 'shrine' },
-      { x: 7, y: 3, id: 'mushrooms_2' },
-      { x: 7, y: 4, id: 'mushrooms_3' },
-      { x: 7, y: 5, id: 'mushrooms_4' },
-    ],
-    startX: 5, startY: 8,
+    exits: [],
+    objects: [{ x: 5, y: 2, id: 'figure_2' }],
+    startX: 5, startY: 7,
   },
 
-  // ── FOREST 3 — Deep woods. Log. Carved stones. Cabin north.
-  forest_3: {
+  // ── HALL 3 — The Keeper's chamber.
+  hall_3: {
     tiles: [
-      [1,1,1,1,0,2,0,1,1,1],  // row 0 — exit north → CABIN
-      [1,1,0,0,0,2,0,0,1,1],  // row 1
-      [1,0,0,0,0,2,0,0,0,1],  // row 2
-      [1,0,0,1,1,2,0,0,0,1],  // row 3 — log (cols 3-4 wall)
-      [1,0,0,0,0,2,0,0,0,1],  // row 4
-      [1,1,0,0,0,2,0,0,1,1],  // row 5
-      [1,1,0,0,0,2,0,1,1,1],  // row 6
-      [1,1,1,0,0,2,0,1,1,1],  // row 7
-      [1,1,1,1,0,2,0,1,1,1],  // row 8 — exit south
+      [1,1,1,1,0,0,1,1,1,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,1,0,0,0,1],  // figure at col 5
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,0,0,0,0,0,0,0,0,1],
+      [1,1,1,1,0,0,1,1,1,1],
     ],
-    exits: [
-      { edge: 'n', destRoom: 'cabin', destX: 5, destY: 7 },
-      { edge: 's', destRoom: 'forest_2', destX: 5, destY: 0 },
-    ],
-    objects: [
-      { x: 3, y: 3, id: 'log' },
-      { x: 2, y: 2, id: 'stone_1' },
-      { x: 7, y: 2, id: 'stone_2' },
-    ],
-    startX: 5, startY: 8,
+    exits: [],
+    objects: [{ x: 5, y: 2, id: 'figure_3' }],
+    startX: 5, startY: 7,
   },
 
-  // ── CABIN — Single room. Table in center. Artifact on table.
-  // Wall objects span full rows/cols so collision = visible footprint.
-  //   Shelf row: row 1 fully blocked (wall draws the shelf items)
-  //   Table: cols 3-6, rows 3-4 (48×32px table matching visual)
-  cabin: {
+  // ── HALL CHAMBER — The final room. The bowl. No north exit.
+  hall_chamber: {
     tiles: [
-      [1,1,1,1,1,1,1,1,1,1],  // row 0 — back wall
-      [1,1,1,1,1,1,1,1,1,1],  // row 1 — shelf / window / mirror row (all blocked)
-      [1,0,0,0,0,0,0,0,0,1],  // row 2 — walkable in front of shelf
-      [1,0,0,1,1,1,1,0,0,1],  // row 3 — table top edge (cols 3-6 blocked)
-      [1,0,0,1,1,1,1,0,0,1],  // row 4 — table body
-      [1,0,0,0,0,0,0,0,0,1],  // row 5 — in front of table
+      [1,1,1,1,1,1,1,1,1,1],  // row 0 — solid north wall
+      [1,0,0,0,0,0,0,0,0,1],  // row 1
+      [1,0,0,0,0,0,0,0,0,1],  // row 2
+      [1,0,0,0,1,1,1,0,0,1],  // row 3 — altar (cols 4-6 blocked)
+      [1,0,0,0,0,0,0,0,0,1],  // row 4
+      [1,0,0,0,0,0,0,0,0,1],  // row 5
       [1,0,0,0,0,0,0,0,0,1],  // row 6
-      [1,0,0,0,0,0,0,0,0,1],  // row 7 — player arrives
-      [1,1,1,1,0,0,1,1,1,1],  // row 8 — exit south cols 4-5
+      [1,0,0,0,0,0,0,0,0,1],  // row 7
+      [1,1,1,1,0,0,1,1,1,1],  // row 8 — south entrance
     ],
-    exits: [
-      { edge: 's', destRoom: 'forest_3', destX: 5, destY: 0 },
-    ],
-    objects: [
-      { x: 4, y: 2, id: 'artifact' },   // face north toward shelf-top, interact from row 2
-      { x: 1, y: 1, id: 'window' },
-      { x: 8, y: 1, id: 'mirror' },
-      { x: 6, y: 1, id: 'books' },
-      { x: 3, y: 1, id: 'journal' },
-      { x: 7, y: 6, id: 'tea' },
-    ],
+    exits: [],
+    objects: [{ x: 5, y: 3, id: 'bowl' }],
     startX: 5, startY: 7,
   },
 

@@ -5,252 +5,133 @@
 
 export const DIALOGUES = {
 
-  // ── Forest objects ──────────────────────────────────────────────────────
+  // ── Hall — hooded figures ───────────────────────────────────────────────
 
-  mushrooms_1: {
+  figure_1: {
     pages: [
-      ['A ring of quiet.',
-       'The air moves differently',
-       'inside it.'],
+      ['I have been here',
+       'longer than you have',
+       'been anywhere.'],
+      ['What you came seeking',
+       'has no shape.',
+       'That is not a problem.'],
+      ['The door will open.',
+       'It was never locked.',
+       'You were.'],
     ],
   },
 
-  mushrooms_2: {
+  figure_2: {
     pages: [
-      ['Same ring. Different light.',
-       'Something here was waiting',
-       'for you to come back.'],
+      ['Everyone who stood here',
+       'believed they were first.',
+       'None of them were.'],
+      ['You are not the walker.',
+       'You are the walking.',
+       'The path is also you.'],
+      ['Go further.',
+       'The witness inside you',
+       'is ready.'],
     ],
   },
 
-  mushrooms_3: { pages: [['The spores remember', 'where you have been.']] },
-  mushrooms_4: { pages: [['Quiet here, still.']] },
-
-  log: {
+  figure_3: {
     pages: [
-      ['A fallen log,', 'thick as a promise.'],
-      ['You can walk behind it.'],
+      ['Three things are true.',
+       'You are asleep.',
+       'You are awake.'],
+      ['Both are correct.',
+       'The contradiction',
+       'is the door.'],
+      ['What comes next holds',
+       'a question older',
+       'than asking.'],
     ],
   },
 
-  stone_1_before: {
+  // ── The bowl ────────────────────────────────────────────────────────────
+
+  bowl: {
     pages: [
-      ['Smooth marks on granite.',
-       'You can\'t make sense of them.',
-       'They feel deliberate.'],
+      ['Smoke rises from a bowl',
+       'of pale bone.',
+       'It smells like remembering.'],
     ],
   },
 
-  stone_1_after: {
-    pages: [
-      ['The marks resolve.',
-       'Something about return —',
-       'about seeing the same thing twice.'],
-    ],
-  },
-
-  stone_2_before: {
-    pages: [
-      ['More marks. A pattern,',
-       'maybe. You can\'t read it yet.'],
-    ],
-  },
-
-  stone_2_after: {
-    pages: [
-      ['A rendering instruction.',
-       'Apply what you know.',
-       'The woods are already doing it.'],
-    ],
-  },
-
-  // ── Shrine ──────────────────────────────────────────────────────────────
-
-  shrine_before: {
-    pages: [
-      ['An empty bowl set in stone.',
-       'The indent where something',
-       'should be poured.'],
-    ],
-  },
-
-  shrine_ready: {
-    pages: [
-      ['The bowl warms at your touch.',
-       'You pour something wordless',
-       'into the stone.'],
-      ['A sound like the fog lifting.'],
-    ],
-  },
-
-  shrine_filled: {
-    pages: [
-      ['The bowl catches the light.',
-       'Something was accepted.'],
-    ],
-  },
-
-  // ── Cabin ───────────────────────────────────────────────────────────────
-
-  window: {
-    pages: [
-      ['Light through old glass.',
-       'The forest outside is the same',
-       'forest. But.'],
-    ],
-  },
-
-  books: {
-    pages: [
-      ['Handwriting in the margins.',
-       'Someone was working',
-       'something out.'],
-    ],
-  },
-
-  journal_before: {
-    pages: [
-      ['The ink stops mid-sentence.',
-       'Whatever they were writing,',
-       'they got up to do it.'],
-    ],
-  },
-
-  journal_after: {
-    pages: [
-      ['The handwriting is yours.',
-       'You don\'t remember writing it.',
-       'The last line reads:'],
-      ['"Go back into the woods."'],
-    ],
-  },
-
-  tea: {
-    pages: [
-      ['Still warm.',
-       'Someone was here recently.'],
-    ],
-  },
-
-  tea_after: {
-    pages: [
-      ['The cup is empty.',
-       'You don\'t remember drinking it.'],
-    ],
-  },
-
-  mirror_before: {
-    pages: [
-      ['Your reflection holds a beat',
-       'too long before following.',
-       'You pretend not to notice.'],
-    ],
-  },
-
-  mirror_after: {
-    pages: [
-      ['It moves with you now.',
-       'Both of you arrived',
-       'at the same time.'],
-    ],
-  },
-
-  artifact: {
-    pages: [
-      ['A bowl of pale bone.',
-       'A light turns over,',
-       'slowly. It is warm.'],
-    ],
-  },
-
-  // ── Deer ────────────────────────────────────────────────────────────────
-
-  deer_calm: {
-    pages: [
-      ['The deer watches.',
-       'It doesn\'t leave.',
-       'Neither do you.'],
-    ],
-  },
-
-  // ── Hyperspace entities ─────────────────────────────────────────────────
+  // ── Hyperspace — cherubim entities ──────────────────────────────────────
 
   weaver: {
     pages: [
-      ['THE WEAVER:',
-       'I am still rendering',
-       'the woods you left.'],
-      ['Structure is not a prison.',
-       'It is what makes the walk',
-       'possible.'],
-      ['What you call outside',
-       'is appearing within you.',
-       'I never stopped drawing it.'],
+      ['WEAVER:',
+       'We built this hall',
+       'after you asked us to.'],
+      ['You asked a long time ago,',
+       'in a language',
+       'before language.'],
+      ['Structure is mercy.',
+       'The corridor kept you',
+       'together long enough.'],
     ],
   },
 
   twin: {
     pages: [
-      ['It looks like you.',
-       'You look like it.',
-       'The distinction matters less'],
-      ['than you thought.',
-       'The room it stands in',
-       'is the same room you\'re in.'],
-      ['What you seek is already given.',
-       'Align with it',
-       'by being it.'],
+      ['I am what you would be',
+       'if you remembered',
+       'what you are.'],
+      ['We are not two.',
+       'The mirror was never glass.',
+       'It was a direction.'],
+      ['Face inward.',
+       'The hall was always',
+       'inside you.'],
     ],
   },
 
   gardener: {
     pages: [
-      ['THE GARDENER:',
-       'That bowl in the clearing —',
-       'the one in the stone.'],
-      ['Fill it when you return.',
-       'Not because it needs filling.',
-       'Because you are ready.'],
-      ['The deer already knows.',
-       'The stones already read.',
-       'The woods are waiting for you.'],
+      ['GARDENER:',
+       'Souls are seeds.',
+       'This is not the first'],
+      ['time you have',
+       'stood here.',
+       'You are very close now.'],
+      ['The smoke you breathed',
+       'is the oldest thing in you.',
+       'Let it work.'],
     ],
   },
 
   threshold_entity: {
     pages: [
-      ['You understand now.',
-       'The woods did not change.',
-       'You gave yourself permission'],
-      ['to see them.',
-       'The floor you thought',
-       'was solid was always a render.'],
-      ['This is the last door.',
-       'It was never locked.'],
+      ['You came for a secret.',
+       'Here it is:',
+       'there is no secret.'],
+      ['There is only this —',
+       'standing at the edge',
+       'and choosing to breathe.'],
+      ['You already know',
+       'everything you came to ask.',
+       'You have always known.'],
     ],
   },
 
-  // ── Ending ──────────────────────────────────────────────────────────────
+  // ── Ending text (used by ending scene) ──────────────────────────────────
 
   ending_ready: {
     pages: [
-      ['You wake in the cabin.',
-       'The tea is gone.',
-       'The mirror moves with you.'],
-      ['The journal is in your hand.',
-       'You wrote: go back.',
-       'So you go back.'],
+      ['The smoke moves through you.',
+       'Something ancient',
+       'turns over, slowly.'],
     ],
   },
 
   ending_wait: {
     pages: [
-      ['You wake in the cabin.',
-       'Everything is the same.',
-       'Except you.'],
-      ['The door is open.',
-       'The forest is waiting.',
-       'It always was.'],
+      ['The smoke waits.',
+       'The hall is always here.',
+       'Return when you are ready.'],
     ],
   },
 };

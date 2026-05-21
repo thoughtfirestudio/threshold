@@ -1,17 +1,17 @@
-// Global game-state flags. The heart of the "transformed world" mechanic.
-// hasCrossed is the big one — a single boolean flip changes the whole forest.
+// Global game-state flags.
+// door flags unlock the next chamber after speaking to the hooded figure.
+// hasCrossed: player inhaled the smoke and entered hyperspace.
 
 export const flags = {
-  hasCrossed:   false,  // has the player been through the threshold?
-  shrineFilled: false,  // filled the shrine bowl on return?
-  metWeaver:    false,  // completed Weaver dialogue?
-  metTwin:      false,  // completed Twin dialogue?
-  metGardener:  false,  // completed Gardener dialogue?
-  journalRead:  false,  // read the cabin journal?
-  mirrorSeen:   false,  // faced the mirror?
+  hasCrossed:   false,  // inhaled the smoke?
+  door1Open:    false,  // spoke to The Warden
+  door2Open:    false,  // spoke to The Witness
+  door3Open:    false,  // spoke to The Keeper
+  metWeaver:    false,  // completed Weaver dialogue
+  metTwin:      false,  // completed Twin dialogue
+  metGardener:  false,  // completed Gardener dialogue
 };
 
-// Registered callback — called after any flag changes so the game can autosave.
 let _onChange = null;
 export function onFlagChanged(cb) { _onChange = cb; }
 
@@ -21,7 +21,6 @@ export function setFlag(name, value = true) {
 }
 
 export function loadFlags(saved) {
-  // Merge saved flags over defaults (so new flags added in dev get their default)
   for (const k of Object.keys(flags)) {
     if (k in saved) flags[k] = saved[k];
   }

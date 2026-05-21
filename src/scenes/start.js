@@ -129,14 +129,15 @@ function getCtxForTitle() {
 
 function startNew() {
   clearSave();
-  if (_startGameCb) _startGameCb({ room: 'forest_1', x: 5, y: 7, flags: null });
-  transition('forest', { room: 'forest_1', x: 5, y: 7 });
+  if (_startGameCb) _startGameCb({ room: 'hall_1', x: 5, y: 7, flags: null });
+  transition('hall', { room: 'hall_1', x: 5, y: 7 });
 }
 
 function loadContinue() {
   const save = loadSave();
   if (!save) { startNew(); return; }
   loadFlags(save.flags);
-  if (_startGameCb) _startGameCb({ room: save.room, x: save.playerX, y: save.playerY, flags: save.flags });
-  transition('forest', { room: save.room, x: save.playerX, y: save.playerY });
+  if (_startGameCb) _startGameCb({ flags: save.flags });
+  const r = save.room || 'hall_1';
+  transition('hall', { room: r, x: save.playerX, y: save.playerY });
 }

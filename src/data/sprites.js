@@ -145,6 +145,19 @@ export const SHRINE_ACTIVE = [
   '...0000...',
 ];
 
+// 6×8 hooded figure (always faces south, toward player).
+// Palette: '0'=deep shadow/outline, '1'=robe body, '2'=inner robe/torch highlight
+export const HOODED_FIGURE = [
+  '011110',  // hood top — wide, flat
+  '001100',  // deep hood shadow (face buried in dark)
+  '011110',  // hood collar / shoulders
+  '012210',  // robe body with faint inner glow
+  '012210',  // robe mid
+  '.1221.',  // robe hem, wider
+  '.0110.',  // robe base
+  '.0000.',  // ground shadow hint
+];
+
 // 6×8 stone (decorated, carved — Act I mute decor, Act IV glowing)
 export const CARVED_STONE = [
   '.00000.',

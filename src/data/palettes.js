@@ -1,17 +1,26 @@
 // Named palettes per register.
-// FOREST and CABIN: strict 4-color Gameboy constraint.
+// HALL: dark stone corridor, torch-lit.
+// FOREST/CABIN: kept for the threshold warp transition and start screen.
 // HYPERSPACE: intentionally breaks the constraint — that's the point.
 
 export const PALETTES = {
-  // Act I & IV (return) — muted, foggy, low-contrast
-  FOREST: {
-    '0': '#1b211a', // darkest  — outlines, trunks, shadows
-    '1': '#3a4a39', // dark     — ground mid, canopy body
-    '2': '#6f7d5a', // mid      — ground base, player body
-    '3': '#aeb38c', // lightest — path, bright highlights
+  // The Hall — dark stone, torch gold
+  HALL: {
+    '0': '#0d0a12', // deepest shadow / outline
+    '1': '#1e1a2e', // dark stone floor / wall body
+    '2': '#3d3560', // mid stone / figure robe
+    '3': '#c8a84b', // torch gold / smoke glow
   },
 
-  // Act II — amber, intimate, still
+  // Kept for threshold warp transition
+  FOREST: {
+    '0': '#1b211a',
+    '1': '#3a4a39',
+    '2': '#6f7d5a',
+    '3': '#aeb38c',
+  },
+
+  // Kept for threshold warp transition
   CABIN: {
     '0': '#241a12',
     '1': '#4a3320',
