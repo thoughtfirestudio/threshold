@@ -3,21 +3,21 @@
 // migrate() staircase ensures old saves never break.
 
 const KEY = 'threshold_save';
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2; // bumped: hall redesign replaces forest/cabin
 
 export function defaultSave() {
   return {
     version: SAVE_VERSION,
     flags: {
       hasCrossed:   false,
-      shrineFilled: false,
+      door1Open:    false,
+      door2Open:    false,
+      door3Open:    false,
       metWeaver:    false,
       metTwin:      false,
       metGardener:  false,
-      journalRead:  false,
-      mirrorSeen:   false,
     },
-    room: 'forest_1',
+    room: 'hall_1',
     playerX: 5,
     playerY: 7,
   };
@@ -25,7 +25,10 @@ export function defaultSave() {
 
 function migrate(s) {
   if (!s.version) s.version = 1;
-  // v1 → v2 would go: if (s.version === 1) { s.newField = default; s.version = 2; }
+  // v1 was forest/cabin world — incompatible. Reset to v2 defaults.
+  if (s.version < 2) {
+    return defaultSave();
+  }
   return s;
 }
 

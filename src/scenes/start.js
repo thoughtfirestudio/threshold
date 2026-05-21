@@ -133,11 +133,14 @@ function startNew() {
   transition('hall', { room: 'hall_1', x: 5, y: 7 });
 }
 
+const VALID_HALL_ROOMS = new Set(['hall_1', 'hall_2', 'hall_3', 'hall_chamber']);
+
 function loadContinue() {
   const save = loadSave();
   if (!save) { startNew(); return; }
   loadFlags(save.flags);
   if (_startGameCb) _startGameCb({ flags: save.flags });
-  const r = save.room || 'hall_1';
+  // Guard against stale saves from old game versions (forest/cabin rooms)
+  const r = VALID_HALL_ROOMS.has(save.room) ? save.room : 'hall_1';
   transition('hall', { room: r, x: save.playerX, y: save.playerY });
 }
